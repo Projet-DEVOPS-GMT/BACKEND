@@ -69,6 +69,7 @@ repositories {  // Claire : les sources de librairies
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:3.3.3'  //creation de la librairie pour l'api 
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
     // Use JUnit test framework.
     testImplementation 'junit:junit:4.13.2' // claire: Junit c'est ce qu'on a besoin pas guava
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.3.3'
