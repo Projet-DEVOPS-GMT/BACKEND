@@ -36,4 +36,52 @@ public class Voyage {
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Ville getVilleDepart() {
+        return villeDepart;
+    }
+
+    public void setVilleDepart(Ville villeDepart) {
+        this.villeDepart = villeDepart;
+    }
+
+    public Ville getVilleDestination() {
+        return villeDestination;
+    }
+
+    public void setVilleDestination(Ville villeDestination) {
+        this.villeDestination = villeDestination;
+    }
+
+    public LocalDate getDateDepart() {
+        return dateDepart;
+    }
+
+    public void setDateDepart(LocalDate dateDepart) {
+        this.dateDepart = dateDepart;
+    }
+
+    public LocalDate getDateRetour() {
+        return dateRetour;
+    }
+
+    public void setDateRetour(LocalDate dateRetour) {
+        this.dateRetour = dateRetour;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

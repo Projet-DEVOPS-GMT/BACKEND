@@ -25,4 +25,28 @@ public class Role {
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNomProfil() {
+        return nomProfil;
+    }
+
+    public void setNomProfil(String nomProfil) {
+        this.nomProfil = nomProfil;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

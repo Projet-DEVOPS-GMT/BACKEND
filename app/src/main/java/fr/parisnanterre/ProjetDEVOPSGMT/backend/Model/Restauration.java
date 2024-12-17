@@ -25,4 +25,36 @@ public class Restauration {
     @Column(nullable = true, precision = 10, scale = 2)
     private BigDecimal tauxCO2;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTypeRestaurant() {
+        return typeRestaurant;
+    }
+
+    public void setTypeRestaurant(String typeRestaurant) {
+        this.typeRestaurant = typeRestaurant;
+    }
+
+    public BigDecimal getPrixMoyenne() {
+        return prixMoyenne;
+    }
+
+    public void setPrixMoyenne(BigDecimal prixMoyenne) {
+        this.prixMoyenne = prixMoyenne;
+    }
+
+    public BigDecimal getTauxCO2() {
+        return tauxCO2;
+    }
+
+    public void setTauxCO2(BigDecimal tauxCO2) {
+        this.tauxCO2 = tauxCO2;
+    }
+
 }

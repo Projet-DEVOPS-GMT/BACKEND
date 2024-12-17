@@ -33,4 +33,68 @@ public class Hebergement {
 
     private String condition;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTypeHebergement() {
+        return typeHebergement;
+    }
+
+    public void setTypeHebergement(String typeHebergement) {
+        this.typeHebergement = typeHebergement;
+    }
+
+    public BigDecimal getPrix() {
+        return prix;
+    }
+
+    public void setPrix(BigDecimal prix) {
+        this.prix = prix;
+    }
+
+    public BigDecimal getTauxCO2() {
+        return tauxCO2;
+    }
+
+    public void setTauxCO2(BigDecimal tauxCO2) {
+        this.tauxCO2 = tauxCO2;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getEquipement() {
+        return equipement;
+    }
+
+    public void setEquipement(String equipement) {
+        this.equipement = equipement;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
 }

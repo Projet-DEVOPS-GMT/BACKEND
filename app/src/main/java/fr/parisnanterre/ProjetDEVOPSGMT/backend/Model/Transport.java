@@ -25,4 +25,36 @@ public class Transport {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal estimationPrix;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTypeTransport() {
+        return typeTransport;
+    }
+
+    public void setTypeTransport(String typeTransport) {
+        this.typeTransport = typeTransport;
+    }
+
+    public BigDecimal getTauxCO2() {
+        return tauxCO2;
+    }
+
+    public void setTauxCO2(BigDecimal tauxCO2) {
+        this.tauxCO2 = tauxCO2;
+    }
+
+    public BigDecimal getEstimationPrix() {
+        return estimationPrix;
+    }
+
+    public void setEstimationPrix(BigDecimal estimationPrix) {
+        this.estimationPrix = estimationPrix;
+    }
+
 }

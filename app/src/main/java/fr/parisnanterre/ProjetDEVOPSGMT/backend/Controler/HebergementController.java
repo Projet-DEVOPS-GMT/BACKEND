@@ -1,4 +1,4 @@
-package fr.parisnanterre.ProjetDEVOPSGMT.backend.Controller;
+package fr.parisnanterre.ProjetDEVOPSGMT.backend.Controler;
 
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Hebergement;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Service.HebergementService;
@@ -20,13 +20,11 @@ public class HebergementController {
         this.hebergementService = hebergementService;
     }
 
-    // Récupérer tous les hébergements
     @GetMapping
     public List<Hebergement> getAllHebergements() {
         return hebergementService.getAllHebergements();
     }
 
-    // Récupérer un hébergement par ID
     @GetMapping("/{id}")
     public ResponseEntity<Hebergement> getHebergementById(@PathVariable Long id) {
         Optional<Hebergement> hebergement = hebergementService.getHebergementById(id);
@@ -34,13 +32,13 @@ public class HebergementController {
                          .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Créer un nouvel hébergement
+
     @PostMapping
     public Hebergement createHebergement(@RequestBody Hebergement hebergement) {
         return hebergementService.saveHebergement(hebergement);
     }
 
-    // Mettre à jour un hébergement existant
+
     @PutMapping("/{id}")
     public ResponseEntity<Hebergement> updateHebergement(@PathVariable Long id, @RequestBody Hebergement hebergementDetails) {
         Optional<Hebergement> hebergementOptional = hebergementService.getHebergementById(id);
@@ -48,7 +46,7 @@ public class HebergementController {
         if (hebergementOptional.isPresent()) {
             Hebergement hebergement = hebergementOptional.get();
             hebergement.setTypeHebergement(hebergementDetails.getTypeHebergement());
-            hebergement.setPrix(hebergementDetails.getPrix());
+            hebergement.setPhoto(hebergementDetails.getPhoto());
             hebergement.setTauxCO2(hebergementDetails.getTauxCO2());
             hebergement.setDescription(hebergementDetails.getDescription());
             hebergement.setEquipement(hebergementDetails.getEquipement());
@@ -62,7 +60,7 @@ public class HebergementController {
         }
     }
 
-    // Supprimer un hébergement par ID
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHebergement(@PathVariable Long id) {
         if (hebergementService.getHebergementById(id).isPresent()) {

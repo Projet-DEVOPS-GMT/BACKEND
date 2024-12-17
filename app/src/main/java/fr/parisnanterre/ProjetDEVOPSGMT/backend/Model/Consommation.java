@@ -31,6 +31,18 @@ public class Consommation {
     @JoinColumn(name = "id_transport")
     private Transport transport;
 
+    @ManyToOne
+    @JoinColumn(name = "id_hebergement")
+    private Hebergement hebergement;
+
+    @ManyToOne
+    @JoinColumn(name = "id_restauration")
+    private Restauration restauration;
+
+    @ManyToOne
+    @JoinColumn(name = "id_voyage", nullable = false)
+    private Voyage voyage;
+
     public Long getId() {
         return id;
     }
@@ -94,18 +106,5 @@ public class Consommation {
     public void setVoyage(Voyage voyage) {
         this.voyage = voyage;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "id_hebergement")
-    private Hebergement hebergement;
-
-    @ManyToOne
-    @JoinColumn(name = "id_restauration")
-    private Restauration restauration;
-
-    @ManyToOne
-    @JoinColumn(name = "id_voyage", nullable = false)
-    private Voyage voyage;
-
 }
 
