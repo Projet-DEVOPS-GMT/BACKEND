@@ -8,12 +8,15 @@
 
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
+    id 'java'
     id 'application'
     id 'jacoco'
     id ("org.sonarqube" )version "5.1.0.4882"
     // for generate doc
     id 'org.asciidoctor.jvm.convert' version '4.0.2'
     id 'org.asciidoctor.jvm.pdf' version '4.0.2'
+	id 'org.springframework.boot' version '3.4.0'
+	id 'io.spring.dependency-management' version '1.1.6'
 
 }
 
@@ -57,7 +60,8 @@ jacocoTestReport {
 }
 
 test {
-    
+     useJUnitPlatform()
+   
     finalizedBy jacocoTestReport // Generates JaCoCo report after testing
 }
 
@@ -74,6 +78,15 @@ dependencies {
     testImplementation 'junit:junit:4.13.2' // claire: Junit c'est ce qu'on a besoin pas guava
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.3.3'
   
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+
+	compileOnly 'org.projectlombok:lombok'
+
+	annotationProcessor 'org.projectlombok:lombok'
+ 
+
+//	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
    
 }
 
