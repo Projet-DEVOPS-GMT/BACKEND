@@ -20,7 +20,7 @@ public class HebergementController {
         this.hebergementService = hebergementService;
     }
 
-    @GetMapping
+    @GetMapping()
     public List<Hebergement> getAllHebergements() {
         return hebergementService.getAllHebergements();
     }

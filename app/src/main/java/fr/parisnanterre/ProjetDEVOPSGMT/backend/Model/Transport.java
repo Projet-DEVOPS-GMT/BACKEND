@@ -23,6 +23,29 @@ public class Transport {
     @Column(nullable = false)
     private double estimationPrix;
 
+    @Column(name = "ville_depart", nullable = true)
+    private String villeDepart;
+
+    public String getVilleDepart() {
+        return villeDepart;
+    }
+
+    public void setVilleDepart(String villeDepart) {
+        this.villeDepart = villeDepart;
+    }
+
+    @Column(name = "ville_destination", nullable = true)
+    private String villeDestination;
+
+
+    public String getVilleDestination() {
+        return villeDestination;
+    }
+
+    public void setVilleDestination(String villeDestination) {
+        this.villeDestination = villeDestination;
+    }
+
     public Long getId() {
         return id;
     }
