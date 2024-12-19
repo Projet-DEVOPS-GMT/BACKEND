@@ -31,21 +31,21 @@ public class TransportController {
         }
     }
 
-    @PostMapping
-    public Transport createTransport(@RequestBody Transport transport) {
-        return transportService.saveTransport(transport);
-    }
+    // @PostMapping
+    // public Transport createTransport(@RequestBody Transport transport) {
+    //     return transportService.saveTransport(transport);
+    // }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Transport> updateTransport(@PathVariable Long id, @RequestBody Transport updatedTransport) {
-        Optional<Transport> existingTransport = transportService.getTransportById(id);
-        if (existingTransport.isPresent()) {
-            updatedTransport.setId(id); // Assurez-vous que l'ID correspond
-            return ResponseEntity.ok(transportService.saveTransport(updatedTransport));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+    // @PutMapping("/{id}")
+    // public ResponseEntity<Transport> updateTransport(@PathVariable Long id, @RequestBody Transport updatedTransport) {
+    //     Optional<Transport> existingTransport = transportService.getTransportById(id);
+    //     if (existingTransport.isPresent()) {
+    //         updatedTransport.setId(id); // Assurez-vous que l'ID correspond
+    //         return ResponseEntity.ok(transportService.saveTransport(updatedTransport));
+    //     } else {
+    //         return ResponseEntity.notFound().build();
+    //     }
+    // }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTransport(@PathVariable Long id) {

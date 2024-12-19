@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface TransportService {
     List<Transport> getAllTransports();
     Optional<Transport> getTransportById(Long id);
-    Transport saveTransport(Transport transport);
+    // Transport saveTransport(Transport transport);
     void deleteTransport(Long id);
 }

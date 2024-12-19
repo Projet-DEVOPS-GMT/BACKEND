@@ -31,7 +31,7 @@ public class Hebergement {
 
     private String photo;
 
-    private String condition;
+    private String conditions_reservation;
 
     public Long getId() {
         return id;
@@ -89,12 +89,12 @@ public class Hebergement {
         this.photo = photo;
     }
 
-    public String getCondition() {
-        return condition;
+    public String getConditionsReservation() {
+        return conditions_reservation;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setConditionsReservation(String conditions_reservation) {
+        this.conditions_reservation = conditions_reservation;
     }
 
 }

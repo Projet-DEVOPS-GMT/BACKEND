@@ -1,7 +1,5 @@
 package fr.parisnanterre.ProjetDEVOPSGMT.backend.Model;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,11 +17,11 @@ public class Transport {
     @Column(nullable = false, length = 50)
     private String typeTransport;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal tauxCO2;
+    @Column(nullable = false)
+    private double tauxCO2;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal estimationPrix;
+    @Column(nullable = false)
+    private double estimationPrix;
 
     public Long getId() {
         return id;
@@ -41,19 +39,19 @@ public class Transport {
         this.typeTransport = typeTransport;
     }
 
-    public BigDecimal getTauxCO2() {
+    public double getTauxCO2() {
         return tauxCO2;
     }
 
-    public void setTauxCO2(BigDecimal tauxCO2) {
+    public void setTauxCO2(double tauxCO2) {
         this.tauxCO2 = tauxCO2;
     }
 
-    public BigDecimal getEstimationPrix() {
+    public double getEstimationPrix() {
         return estimationPrix;
     }
 
-    public void setEstimationPrix(BigDecimal estimationPrix) {
+    public void setEstimationPrix(double estimationPrix) {
         this.estimationPrix = estimationPrix;
     }
 

@@ -51,7 +51,7 @@ public class HebergementController {
             hebergement.setDescription(hebergementDetails.getDescription());
             hebergement.setEquipement(hebergementDetails.getEquipement());
             hebergement.setPhoto(hebergementDetails.getPhoto());
-            hebergement.setCondition(hebergementDetails.getCondition());
+            hebergement.setConditionsReservation(hebergementDetails.getConditionsReservation());
 
             Hebergement updatedHebergement = hebergementService.saveHebergement(hebergement);
             return ResponseEntity.ok(updatedHebergement);
