@@ -2,6 +2,7 @@ package fr.parisnanterre.ProjetDEVOPSGMT.backend.Service;
 
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Consommation;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Repository.ConsommationRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,21 +35,21 @@ public class ConsommationServiceImpl implements ConsommationService {
     }
 
     @Override
-    public Consommation updateConsommation(Long id, Consommation consommation) {
-        return consommationRepository.findById(id).map(existingConsommation -> {
-            existingConsommation.setType(consommation.getType());
-            existingConsommation.setPrix(consommation.getPrix());
-            existingConsommation.setTauxCO2(consommation.getTauxCO2());
-            existingConsommation.setTransport(consommation.getTransport());
-            existingConsommation.setHebergement(consommation.getHebergement());
-            existingConsommation.setRestauration(consommation.getRestauration());
-            existingConsommation.setVoyage(consommation.getVoyage());
-            return consommationRepository.save(existingConsommation);
-        }).orElseThrow(() -> new RuntimeException("Consommation not found with id: " + id));
+    public void deleteConsommation(Long id) {
+        consommationRepository.deleteById(id);
     }
 
     @Override
-    public void deleteConsommation(Long id) {
-        consommationRepository.deleteById(id);
+    public Consommation updateConsommation(Long id, Consommation consommation) {
+        Optional<Consommation> existingConsommation = consommationRepository.findById(id);
+        if (existingConsommation.isPresent()) {
+            Consommation updatedConsommation = existingConsommation.get();
+            updatedConsommation.setType(consommation.getType());
+            updatedConsommation.setPrix(consommation.getPrix());
+            updatedConsommation.setTauxCO2(consommation.getTauxCO2());
+            return consommationRepository.save(updatedConsommation);
+        } else {
+            throw new RuntimeException("Consommation not found");
+        }
     }
 }

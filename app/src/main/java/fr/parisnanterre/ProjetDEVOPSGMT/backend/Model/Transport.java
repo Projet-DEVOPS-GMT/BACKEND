@@ -1,6 +1,7 @@
 package fr.parisnanterre.ProjetDEVOPSGMT.backend.Model;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,6 +39,17 @@ public class Transport {
 
     @Column(name = "date_retour", nullable = true)
     private LocalDate dateRetour;
+
+    @Column(name = "duree", nullable = true)
+    private LocalTime duration;
+
+    public LocalTime getDuration() {
+        return duration;
+    }
+
+    public void setDuration(LocalTime duration) {
+        this.duration = duration;
+    }
 
     public Long getId() {
         return id;
