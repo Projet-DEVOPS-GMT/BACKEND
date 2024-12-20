@@ -27,8 +27,8 @@ public class User {
     @Column(nullable = false, length = 100, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 255)
-    private String motDePasse;
+    @Column(name = "mot_de_passe", nullable = false, length = 255)
+    private String motDePasse;    
 
     public Long getId() {
         return id;

@@ -3,10 +3,12 @@ package fr.parisnanterre.ProjetDEVOPSGMT.backend.Controler;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.User;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -32,8 +34,26 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        try {
+            User createdUser = userService.createUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> loginUser(@RequestBody Map<String, String> loginRequest) {
+        String email = loginRequest.get("email");
+        String password = loginRequest.get("password");
+
+        User user = userService.findByEmailAndPassword(email, password);
+        if (user != null) {
+            return ResponseEntity.ok(user); 
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); 
+        }
     }
 
     @PutMapping("/{id}")

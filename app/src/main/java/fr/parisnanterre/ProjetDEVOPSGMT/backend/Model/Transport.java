@@ -1,5 +1,7 @@
 package fr.parisnanterre.ProjetDEVOPSGMT.backend.Model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,25 +28,16 @@ public class Transport {
     @Column(name = "ville_depart", nullable = true)
     private String villeDepart;
 
-    public String getVilleDepart() {
-        return villeDepart;
-    }
-
-    public void setVilleDepart(String villeDepart) {
-        this.villeDepart = villeDepart;
-    }
-
+    
     @Column(name = "ville_destination", nullable = true)
     private String villeDestination;
 
 
-    public String getVilleDestination() {
-        return villeDestination;
-    }
+    @Column(name = "date_depart", nullable = true)
+    private LocalDate dateDepart;
 
-    public void setVilleDestination(String villeDestination) {
-        this.villeDestination = villeDestination;
-    }
+    @Column(name = "date_retour", nullable = true)
+    private LocalDate dateRetour;
 
     public Long getId() {
         return id;
@@ -78,4 +71,35 @@ public class Transport {
         this.estimationPrix = estimationPrix;
     }
 
+    public String getVilleDestination() {
+        return villeDestination;
+    }
+
+    public void setVilleDestination(String villeDestination) {
+        this.villeDestination = villeDestination;
+    }
+    public String getVilleDepart() {
+        return villeDepart;
+    }
+
+    public void setVilleDepart(String villeDepart) {
+        this.villeDepart = villeDepart;
+    }
+
+
+    public LocalDate getDateDepart() {
+        return dateDepart;
+    }
+
+    public void setDateDepart(LocalDate dateDepart) {
+        this.dateDepart = dateDepart;
+    }
+    
+    public LocalDate getDateRetour() {
+        return dateRetour;
+    }
+
+    public void setDateRetour(LocalDate dateRetour) {
+        this.dateRetour = dateRetour;
+    }
 }

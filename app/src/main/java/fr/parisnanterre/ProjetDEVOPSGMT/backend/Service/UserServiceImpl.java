@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -35,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        // Vérification si un utilisateur existe déjà avec cet email
+        // user.setMotDePasse(BCrypt.hashpw(user.getMotDePasse(), BCrypt.gensalt()));
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new RuntimeException("Un utilisateur avec cet email existe déjà !");
         }
@@ -56,5 +55,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public User findByEmailAndPassword(String email, String password) {  // nous alons spring sécurite in V3 
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            if (user.getMotDePasse().equals(password)) {
+                return user; 
+            }
+        }
+        return null; 
     }
 }

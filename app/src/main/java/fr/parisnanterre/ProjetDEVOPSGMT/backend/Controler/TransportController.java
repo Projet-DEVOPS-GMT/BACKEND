@@ -6,15 +6,13 @@ import fr.parisnanterre.ProjetDEVOPSGMT.backend.Service.TransportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import org.slf4j.LoggerFactory;
+
 
 @RestController
 @RequestMapping("/api/transports/")
@@ -29,25 +27,31 @@ public class TransportController {
     //     return transportService.getAllTransports();
     // }
 
-    @GetMapping("/compare-transport")
+   @GetMapping("/compare-transport")
     public ResponseEntity<List<Transport>> compareTransport(
             @RequestParam String depart,
-            @RequestParam String destination) {
-        logger.info("Requête reçue: départ = {}, destination = {}", depart, destination);
+            @RequestParam String destination,
+            @RequestParam String dateDepart,  
+            @RequestParam String dateRetour) { 
         
+        logger.info("Requête reçue: départ = {}, destination = {}, dateDepart = {}, dateRetour = {}", depart, destination, dateDepart, dateRetour);
         try {
-            List<Transport> transports = transportService.getTransportsByCities(depart, destination);
+ 
+            LocalDate dateDepartParsed = LocalDate.parse(dateDepart);
+            LocalDate dateRetourParsed = LocalDate.parse(dateRetour);
+
+            List<Transport> transports = transportService.getTransportsByCities(depart, destination, dateDepartParsed, dateRetourParsed);
+
             if (transports.isEmpty()) {
-                return ResponseEntity.status(204).body(null);  // No content
+                return ResponseEntity.status(204).body(null);  
             }
             return ResponseEntity.ok(transports);
+
         } catch (Exception e) {
             logger.error("Erreur lors de la récupération des transports: ", e);
-            return ResponseEntity.status(500).body(null);  // Internal server error
+            return ResponseEntity.status(500).body(null);  
         }
-
     }
-    
     @GetMapping("/{id}")
     public ResponseEntity<Transport> getTransportById(@PathVariable Long id) {
         Optional<Transport> transport = transportService.getTransportById(id);
