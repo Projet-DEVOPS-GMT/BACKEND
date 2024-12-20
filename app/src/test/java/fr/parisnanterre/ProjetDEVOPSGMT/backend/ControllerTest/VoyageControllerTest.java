@@ -26,6 +26,7 @@ class VoyageControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
     private VoyageService voyageService;
 
     @Autowired

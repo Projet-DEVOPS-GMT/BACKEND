@@ -25,7 +25,7 @@ class VilleControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-   
+    @MockBean
     private VilleService villeService;
 
     @Autowired
