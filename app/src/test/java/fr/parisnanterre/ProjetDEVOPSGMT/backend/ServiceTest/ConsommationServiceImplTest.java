@@ -1,51 +1,89 @@
 package fr.parisnanterre.ProjetDEVOPSGMT.backend.ServiceTest;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.math.BigDecimal;
+import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Consommation;
+import fr.parisnanterre.ProjetDEVOPSGMT.backend.Repository.ConsommationRepository;
+import fr.parisnanterre.ProjetDEVOPSGMT.backend.Service.ConsommationServiceImpl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
-import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Consommation;
-import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Transport;
-import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Voyage;
+import org.mockito.MockitoAnnotations;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class ConsommationServiceImplTest {
 
-    private Consommation consommation;
+    @InjectMocks
+    private ConsommationServiceImpl consommationService;
+
+    @Mock
+    private ConsommationRepository consommationRepository;
 
     @BeforeEach
     void setUp() {
-        consommation = new Consommation();
-
-        // Initialisation de Transport
-        Transport transport = new Transport();
-        transport.setTypeTransport("Voiture électrique"); // Utilisation de l'attribut typeTransport
-        transport.setTauxCO2(120.5);
-        transport.setEstimationPrix(75.0);
-
-        // Initialisation de Voyage
-        Voyage voyage = new Voyage();
-        // Les objets Ville pour `villeDepart` et `villeDestination` doivent être créés et associés.
-        // Pour simplifier ici, on ne les initialisera pas mais on peut les simuler en test unitaire mocké.
-
-        consommation.setTransport(transport);
-        consommation.setVoyage(voyage);
-
-        consommation.setType("Transport");
-        consommation.setPrix(new BigDecimal("100.50"));
-        consommation.setTauxCO2(new BigDecimal("50.75"));
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void testConsommationFields() {
-        assertNotNull(consommation.getTransport(), "Le transport ne doit pas être null.");
-        assertNotNull(consommation.getVoyage(), "Le voyage ne doit pas être null.");
-        assertEquals("Transport", consommation.getType(), "Le type doit être 'Transport'.");
-        assertEquals(new BigDecimal("100.50"), consommation.getPrix(), "Le prix doit être 100.50.");
-        assertEquals(new BigDecimal("50.75"), consommation.getTauxCO2(), "Le taux CO2 doit être 50.75.");
+    void testGetAllConsommations() {
+        Consommation consommation1 = new Consommation();
+        consommation1.setId(1L);
+
+        Consommation consommation2 = new Consommation();
+        consommation2.setId(2L);
+
+        List<Consommation> consommations = Arrays.asList(consommation1, consommation2);
+
+        when(consommationRepository.findAll()).thenReturn(consommations);
+
+        List<Consommation> result = consommationService.getAllConsommations();
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        verify(consommationRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testCreateConsommation() {
+        Consommation consommation = new Consommation();
+        consommation.setId(1L);
+
+        when(consommationRepository.save(any(Consommation.class))).thenReturn(consommation);
+
+        Consommation result = consommationService.createConsommation(consommation);
+
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+        verify(consommationRepository, times(1)).save(consommation);
+    }
+
+    @Test
+    void testGetConsommationById() {
+        Consommation consommation = new Consommation();
+        consommation.setId(1L);
+
+        when(consommationRepository.findById(1L)).thenReturn(Optional.of(consommation));
+
+        Optional<Consommation> result = consommationService.getConsommationById(1L);
+
+        assertTrue(result.isPresent());
+        assertEquals(1L, result.get().getId());
+        verify(consommationRepository, times(1)).findById(1L);
+    }
+   
+    @Test
+    void testDeleteConsommation() {
+        doNothing().when(consommationRepository).deleteById(1L);
+
+        consommationService.deleteConsommation(1L);
+
+        verify(consommationRepository, times(1)).deleteById(1L);
     }
 }
