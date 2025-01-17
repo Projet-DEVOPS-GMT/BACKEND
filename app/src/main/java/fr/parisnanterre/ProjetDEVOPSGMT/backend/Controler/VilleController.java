@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/villes")
@@ -29,6 +30,23 @@ public class VilleController {
         return villeService.getVilleById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/eco-score")
+    public ResponseEntity<?> getEcoScore(@PathVariable Long id) {
+        Optional<Ville> villeOpt = villeService.getVilleById(id);
+        if (villeOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Ville ville = villeOpt.get();
+        double ecoScore = villeService.calculateEcoScore(ville);
+
+        return ResponseEntity.ok().body(new Object() {
+            public final String city = ville.getNom();
+            public final double score = ecoScore;
+            public final Ville details = ville;
+        });
     }
 
     @PostMapping

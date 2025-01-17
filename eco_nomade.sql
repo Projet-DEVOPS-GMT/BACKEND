@@ -267,9 +267,69 @@ CREATE TABLE IF NOT EXISTS `ville` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nom` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `id_pays` bigint NOT NULL,
+  `population` bigint NOT NULL,
+  `pib` double NOT NULL,
+  `tauxCo2` double NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FKaxs0bkhk2wqmwevrwptgwfy9g` (`id_pays`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `ville`
+--
+
+INSERT INTO `ville` (`id`, `nom`, `id_pays`, `population`, `pib`, `tauxCo2`) VALUES
+(1, 'Paris', 1, 2148000, 70800, 4.2),
+(2, 'Marseille', 1, 861635, 47000, 4.0),
+(3, 'Lyon', 1, 515695, 73800, 4.1),
+(4, 'Toulouse', 1, 479180, 56100, 3.7),
+(5, 'Nice', 1, 343000, 40000, 3.5),
+(6, 'Nantes', 1, 314000, 41000, 3.6),
+(7, 'Strasbourg', 1, 280000, 48000, 3.8),
+(8, 'Montpellier', 1, 290000, 41000, 3.6),
+(9, 'Bordeaux', 1, 250000, 50000, 3.7),
+(10, 'Lille', 1, 232000, 46000, 4.0),
+(11, 'Rennes', 1, 217000, 35000, 3.3),
+(12, 'Le Havre', 1, 172000, 45000, 3.5),
+(13, 'Saint-Étienne', 1, 171000, 34000, 3.3),
+(14, 'Toulon', 1, 165000, 38000, 3.6),
+(15, 'Le Mans', 1, 143000, 32000, 3.2),
+(16, 'Aix-en-Provence', 1, 143000, 47000, 3.5),
+(17, 'Clermont-Ferrand', 1, 141000, 38000, 3.4),
+(18, 'Reims', 1, 182000, 43000, 3.6),
+(19, 'Angers', 1, 154000, 42000, 3.4),
+(20, 'La Rochelle', 1, 80000, 37000, 3.2),
+(21, 'Caen', 1, 106000, 36000, 3.3),
+(22, 'Perpignan', 1, 120000, 32000, 3.1),
+(23, 'Grenoble', 1, 160000, 53000, 3.7),
+(24, 'Nancy', 1, 104000, 40000, 3.4),
+(25, 'Orléans', 1, 116000, 37000, 3.3),
+(26, 'Metz', 1, 116000, 42000, 3.5),
+(27, 'Brest', 1, 140000, 39000, 3.4),
+(28, 'Poitiers', 1, 88000, 31000, 3.2),
+(29, 'Chartres', 1, 38000, 29000, 3.1),
+(30, 'Nevers', 1, 35000, 23000, 2.9),
+(31, 'Tarbes', 1, 50000, 26000, 2.8),
+(32, 'Chalon-sur-Saône', 1, 45000, 24000, 2.7),
+(33, 'Évreux', 1, 60000, 28000, 3.1),
+(34, 'Saint-Malo', 1, 46000, 31000, 3.2),
+(35, 'Vannes', 1, 53000, 33000, 3.1),
+(36, 'Ajaccio', 1, 67000, 34000, 3.5),
+(37, 'Béziers', 1, 77000, 32000, 3.2),
+(38, 'Annecy', 1, 130000, 49000, 3.6),
+(39, 'Chambéry', 1, 62000, 44000, 3.4),
+(40, 'Niort', 1, 59000, 30000, 2.9),
+(41, 'Douai', 1, 41000, 31000, 3.3),
+(42, 'Montauban', 1, 60000, 32000, 3.0),
+(43, 'Angoulême', 1, 43000, 29000, 2.8),
+(44, 'Sète', 1, 43000, 35000, 3.3),
+(45, 'Le Puy-en-Velay', 1, 20000, 22000, 2.6),
+(46, 'Vichy', 1, 25000, 23000, 2.7),
+(47, 'Cannes', 1, 74000, 51000, 3.6),
+(48, 'Fontainebleau', 1, 16000, 38000, 3.2),
+(49, 'Villers-Cotterêts', 1, 15000, 21000, 2.8),
+(50, 'Échirolles', 1, 37000, 34000, 3.1);
+
 
 -- --------------------------------------------------------
 

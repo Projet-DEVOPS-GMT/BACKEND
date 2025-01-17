@@ -46,4 +46,14 @@ public class VilleServiceImpl implements VilleService {
     public void deleteVille(Long id) {
         villeRepository.deleteById(id);
     }
+
+    @Override
+    public Double calculateEcoScore(Ville ville) {
+        // Logique métier simplifiée : réduire le score si le CO2 est élevé, augmenter si PIB/population est faible
+        double score = 100.0; // Base
+        score -= ville.getTauxCo2() * 10; // Réduction proportionnelle au CO₂
+        score += 10000.0 / ville.getPopulation(); // Augmentation pour petites villes
+        score += ville.getPib() / 1000000; // Contribution du PIB (en millions)
+        return Math.max(0, Math.min(score, 100)); // Score entre 0 et 100
+    }
 }
