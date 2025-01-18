@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:8889/eco_nomade
+    url: jdbc:mysql://localhost:3306/eco_nomade
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -9,12 +9,13 @@ spring:
     hibernate:
       ddl-auto: update 
     show-sql: true
+    open-in-view: false
     properties:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect 
 
 server:
-  port: 8081 
+  port: 8080
 
 # sncf.api.key="cba235f446bbe269cec5fec608ead671f1c4739be57df66f5cd4cc59"

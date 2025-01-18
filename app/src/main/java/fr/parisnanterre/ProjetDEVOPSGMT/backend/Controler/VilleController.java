@@ -36,11 +36,14 @@ public class VilleController {
     public ResponseEntity<?> getEcoScore(@PathVariable Long id) {
         Optional<Ville> villeOpt = villeService.getVilleById(id);
         if (villeOpt.isEmpty()) {
+            System.out.println("Ville avec ID " + id + " non trouvée.");
             return ResponseEntity.notFound().build();
         }
 
         Ville ville = villeOpt.get();
         double ecoScore = villeService.calculateEcoScore(ville);
+        System.out.println("EcoScore calculé pour la ville : " + ville.getNom());
+
 
         return ResponseEntity.ok().body(new Object() {
             public final String city = ville.getNom();
