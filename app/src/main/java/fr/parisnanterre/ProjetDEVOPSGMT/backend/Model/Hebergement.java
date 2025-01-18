@@ -7,11 +7,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="hebergement")
+@Table(name = "hebergement")
 public class Hebergement {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,6 +36,12 @@ public class Hebergement {
 
     private String conditions_reservation;
 
+    // Relation avec la table Ville
+    @ManyToOne
+    @JoinColumn(name = "id_ville", nullable = false) // Lié à la table ville
+    private Ville ville;
+
+    // Getters et Setters
     public Long getId() {
         return id;
     }
@@ -97,4 +106,11 @@ public class Hebergement {
         this.conditions_reservation = conditions_reservation;
     }
 
+    public Ville getVille() {
+        return ville;
+    }
+
+    public void setVille(Ville ville) {
+        this.ville = ville;
+    }
 }

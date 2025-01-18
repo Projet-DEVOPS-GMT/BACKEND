@@ -1,6 +1,7 @@
 package fr.parisnanterre.ProjetDEVOPSGMT.backend.Service;
 
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Hebergement;
+import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Ville;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Repository.HebergementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,18 @@ public class HebergementServiceImpl implements HebergementService {
 
     @Override
     public List<Hebergement> getAllHebergements() {
+        return hebergementRepository.findAll();
+    }
+
+    @Override
+    public List<Hebergement> getHebergementsByCriteria(Ville ville, String typeHebergement) {
+        if (ville != null && typeHebergement != null) {
+            return hebergementRepository.findByVilleAndTypeHebergement(ville, typeHebergement);
+        } else if (ville != null) {
+            return hebergementRepository.findByVille(ville);
+        } else if (typeHebergement != null) {
+            return hebergementRepository.findByTypeHebergement(typeHebergement);
+        }
         return hebergementRepository.findAll();
     }
 
