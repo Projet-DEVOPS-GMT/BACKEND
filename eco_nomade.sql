@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le : ven. 20 déc. 2024 à 22:37
--- Version du serveur : 9.1.0
--- Version de PHP : 8.3.14
+-- Hôte : localhost:8889
+-- Généré le : dim. 19 jan. 2025 à 16:20
+-- Version du serveur : 5.7.39
+-- Version de PHP : 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,22 +27,16 @@ SET time_zone = "+00:00";
 -- Structure de la table `consommation`
 --
 
-DROP TABLE IF EXISTS `consommation`;
-CREATE TABLE IF NOT EXISTS `consommation` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `consommation` (
+  `id` bigint(20) NOT NULL,
   `prix` decimal(10,2) NOT NULL,
   `tauxco2` decimal(10,2) NOT NULL,
-  `type` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `id_hebergement` bigint DEFAULT NULL,
-  `id_restauration` bigint DEFAULT NULL,
-  `id_transport` bigint DEFAULT NULL,
-  `id_voyage` bigint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKm8v8dn0qq32rylgwic8d6j28q` (`id_restauration`),
-  KEY `FK61amtkv49jffag45c06574cx2` (`id_transport`),
-  KEY `FKsgwlyblb80bnf340gilio38df` (`id_voyage`),
-  KEY `FKfvnqklkp6neoo8f4dmkijev00` (`id_hebergement`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `type` varchar(50) NOT NULL,
+  `id_hebergement` bigint(20) DEFAULT NULL,
+  `id_restauration` bigint(20) DEFAULT NULL,
+  `id_transport` bigint(20) DEFAULT NULL,
+  `id_voyage` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -50,66 +44,64 @@ CREATE TABLE IF NOT EXISTS `consommation` (
 -- Structure de la table `hebergement`
 --
 
-DROP TABLE IF EXISTS `hebergement`;
-CREATE TABLE IF NOT EXISTS `hebergement` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `conditions_reservation` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `equipement` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `photo` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+CREATE TABLE `hebergement` (
+  `id` bigint(20) NOT NULL,
+  `conditions_reservation` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `equipement` varchar(255) DEFAULT NULL,
+  `photo` varchar(255) DEFAULT NULL,
   `prix` decimal(10,2) DEFAULT NULL,
   `tauxco2` decimal(10,2) DEFAULT NULL,
-  `type_hebergement` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `type_hebergement` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `hebergement`
 --
 
 INSERT INTO `hebergement` (`id`, `conditions_reservation`, `description`, `equipement`, `photo`, `prix`, `tauxco2`, `type_hebergement`) VALUES
-(1, 'Annulation gratuite jusqu\'à 24h avant l\'arrivée', 'Appartement moderne avec vue sur la ville, proche des commodités.', 'Wi-Fi, Climatisation, Cuisine équipée, Balcon', 'https://example.com/photos/appartement1.jpg', 120.00, 2.50, 'Appartement'),
-(2, 'Annulation gratuite jusqu\'à 7 jours avant l\'arrivée', 'Chalet spacieux en montagne, idéal pour les familles.', 'Cheminée, Parking gratuit, Proche des pistes', 'https://example.com/photos/chalet1.jpg', 250.00, 5.20, 'Chalet'),
-(3, 'Non remboursable', 'Chambre d\'hôtel confortable avec petit déjeuner inclus.', 'Wi-Fi, Télévision, Room service', 'https://example.com/photos/hotel1.jpg', 90.00, 3.10, 'Hôtel'),
-(4, 'Annulation gratuite jusqu\'à 14 jours avant l\'arrivée', 'Villa luxueuse avec piscine privée et grand jardin.', 'Piscine, Wi-Fi, Climatisation, Barbecue', 'https://example.com/photos/villa1.jpg', 450.00, 8.00, 'Villa'),
-(5, 'Annulation gratuite jusqu\'à 3 jours avant l\'arrivée', 'Emplacement pour tente avec accès aux sanitaires partagés.', 'Parking gratuit, Barbecue, Électricité', 'https://example.com/photos/camping1.jpg', 50.00, 1.00, 'Camping'),
-(6, 'Annulation gratuite jusqu\'à 48h avant l\'arrivée', 'Appartement avec deux chambres dans le centre historique.', 'Wi-Fi, Cuisine équipée, Machine à laver', 'https://example.com/photos/appartement2.jpg', 140.00, 2.30, 'Appartement'),
-(7, 'Non remboursable', 'Suite dans un hôtel 5 étoiles avec spa et restaurant gastronomique.', 'Wi-Fi, Piscine, Service en chambre 24/7', 'https://example.com/photos/hotel2.jpg', 200.00, 4.00, 'Hôtel'),
-(8, 'Annulation gratuite jusqu\'à 5 jours avant l\'arrivée', 'Riad traditionnel au cœur de la médina avec patio intérieur.', 'Wi-Fi, Climatisation, Petit déjeuner inclus', 'https://example.com/photos/riad1.jpg', 180.00, 3.50, 'Riad'),
-(9, 'Annulation gratuite jusqu\'à 48h avant l\'arrivée', 'Chambre dans une maison d\'hôtes avec accueil chaleureux.', 'Petit déjeuner inclus, Wi-Fi, Terrasse', 'https://example.com/photos/maison_hotes1.jpg', 75.00, 2.80, 'Maison d\'hôtes'),
-(10, 'Annulation gratuite jusqu\'à 10 jours avant l\'arrivée', 'Chalet moderne avec sauna et vue panoramique sur les montagnes.', 'Sauna, Parking, Proche des pistes', 'https://example.com/photos/chalet2.jpg', 300.00, 6.00, 'Chalet'),
-(11, 'Non remboursable', 'Bungalow en bord de plage avec accès direct à la mer.', 'Climatisation, Wi-Fi, Parking gratuit', 'https://example.com/photos/bungalow1.jpg', 100.00, 1.50, 'Bungalow'),
-(12, 'Annulation gratuite jusqu\'à 24h avant l\'arrivée', 'Lit en dortoir dans une auberge de jeunesse conviviale.', 'Wi-Fi, Cuisine commune, Salon partagé', 'https://example.com/photos/auberge1.jpg', 30.00, 0.50, 'Auberge'),
-(13, 'Non-fumeur', 'Appartement lumineux avec balcon et vue sur la ville', 'Wi-Fi, Climatisation, Cuisine équipée', 'photo11.jpg', 150.00, 12.00, 'Appartement'),
-(14, 'Animaux acceptés', 'Maison isolée avec grand jardin et cheminée', 'Wi-Fi, Parking, Cuisine équipée', 'photo12.jpg', 200.00, 20.00, 'Maison de campagne'),
-(15, 'Non-fumeur', 'Chambre confortable avec petit-déjeuner inclus', 'Wi-Fi, Salle de bain privée, Vue sur le jardin', 'photo13.jpg', 75.00, 10.00, 'Chambre d\'hôtes'),
-(16, 'Non-fumeur', 'Villa privée avec piscine et salle de sport', 'Piscine, Jacuzzi, Cuisine haut de gamme', 'photo14.jpg', 800.00, 50.00, 'Villa de luxe'),
-(17, 'Non-fumeur', 'Chalet chaleureux près des stations de ski', 'Cheminée, Parking, Sauna', 'photo15.jpg', 250.00, 25.00, 'Chalet en montagne'),
-(18, 'Animaux acceptés', 'Bungalow cosy avec accès direct à la plage', 'Terrasse, Wi-Fi, Climatisation', 'photo16.jpg', 180.00, 22.00, 'Bungalow sur la plage'),
-(19, 'Non-fumeur', 'Studio compact avec toutes les commodités modernes', 'Wi-Fi, Cuisine équipée, Climatisation', 'photo17.jpg', 120.00, 14.00, 'Studio moderne'),
-(20, 'Non-fumeur', 'Riad authentique avec patio traditionnel', 'Climatisation, Hammam, Petit-déjeuner inclus', 'photo18.jpg', 220.00, 20.00, 'Riad marocain'),
-(21, 'Animaux acceptés', 'Yourte avec vue panoramique, idéale pour un séjour nature', 'Lit double, Poêle à bois, Activités en plein air', 'photo19.jpg', 90.00, 8.00, 'Yourte éco-responsable'),
-(22, 'Non-fumeur', 'Cabane dans les arbres avec terrasse et vue exceptionnelle', 'Wi-Fi, Petit-déjeuner inclus, Proche des sentiers', 'photo20.jpg', 170.00, 18.00, 'Cabane perchée'),
-(23, 'Non-fumeur', 'Penthouse luxueux avec vue imprenable sur la ville', 'Terrasse, Jacuzzi, Wi-Fi haut débit', 'photo21.jpg', 400.00, 15.00, 'Penthouse'),
-(24, 'Animaux acceptés', 'Maison conviviale dans un quartier calme', 'Cuisine équipée, Wi-Fi, Parking privé', 'photo22.jpg', 140.00, 13.00, 'Maison mitoyenne'),
-(25, 'Non-fumeur', 'Tiny House éco-conçue au cœur de la nature', 'Cuisine compacte, Terrasse, Poêle à bois', 'photo23.jpg', 100.00, 7.00, 'Tiny House'),
-(26, 'Non-fumeur', 'Maison moderne avec grandes baies vitrées', 'Piscine, Parking, Climatisation', 'photo24.jpg', 300.00, 20.00, 'Maison d\'architecte'),
-(27, 'Non-fumeur', 'Studio avec accès direct à la plage', 'Cuisine équipée, Terrasse, Climatisation', 'photo25.jpg', 110.00, 9.00, 'Studio en bord de mer'),
-(28, 'Non-fumeur', 'Hôtel design avec services personnalisés', 'Wi-Fi, Bar, Service en chambre', 'photo26.jpg', 250.00, 16.00, 'Hôtel boutique'),
-(29, 'Animaux acceptés', 'Gîte familial dans une ferme rénovée', 'Wi-Fi, Parking, Activités pour enfants', 'photo27.jpg', 180.00, 22.00, 'Gîte rural'),
-(30, 'Non-fumeur', 'Loft spacieux avec une décoration industrielle', 'Wi-Fi, Cuisine équipée, Climatisation', 'photo28.jpg', 300.00, 18.00, 'Appartement loft'),
-(31, 'Non-fumeur', 'Villa avec piscine et vue sur la mer Méditerranée', 'Piscine, Jardin, Parking privé', 'photo29.jpg', 450.00, 30.00, 'Villa méditerranéenne'),
-(32, 'Animaux acceptés', 'Maison en pierre avec charme authentique', 'Cheminée, Wi-Fi, Proche des sentiers de randonnée', 'photo30.jpg', 130.00, 14.00, 'Maison traditionnelle'),
-(33, 'Non-fumeur', 'Riad avec piscine intérieure et service haut de gamme', 'Hammam, Wi-Fi, Service en chambre', 'photo31.jpg', 500.00, 40.00, 'Riad de luxe'),
-(34, 'Animaux non acceptés', 'Cabane sur l\'eau avec vue panoramique', 'Kayak inclus, Terrasse, Cuisine équipée', 'photo32.jpg', 200.00, 25.00, 'Cabane flottante'),
-(35, 'Non-fumeur', 'Chambre majestueuse dans un château historique', 'Petit-déjeuner, Wi-Fi, Visite du château', 'photo33.jpg', 350.00, 20.00, 'Chambre dans un château'),
-(36, 'Animaux acceptés', 'Appartement spacieux pour les familles', 'Wi-Fi, Cuisine équipée, Parking gratuit', 'photo34.jpg', 150.00, 10.00, 'Appartement familial'),
-(37, 'Non-fumeur', 'Maison avec terrasse et accès direct au lac', 'Canoë inclus, Wi-Fi, Barbecue', 'photo35.jpg', 300.00, 30.00, 'Maison au bord d\'un lac'),
-(38, 'Animaux acceptés', 'Bungalow écologique au cœur de la jungle', 'Ventilateur, Terrasse, Cuisine équipée', 'photo36.jpg', 100.00, 20.00, 'Bungalow jungle'),
-(39, 'Non-fumeur', 'Chalet avec vue imprenable sur le lac', 'Cheminée, Wi-Fi, Activités nautiques', 'photo37.jpg', 250.00, 18.00, 'Chalet au bord de l\'eau'),
-(40, 'Non-fumeur', 'Studio pratique pour un séjour en ville', 'Climatisation, Wi-Fi, Cuisine équipée', 'photo38.jpg', 80.00, 12.00, 'Studio urbain'),
-(41, 'Animaux acceptés', 'Villa entourée de palmiers avec piscine privée', 'Piscine, Wi-Fi, Parking', 'photo39.jpg', 600.00, 50.00, 'Villa tropicale'),
-(42, 'Non-fumeur', 'Maison en centre-ville avec terrasse fleurie', 'Cuisine équipée, Wi-Fi, Climatisation', 'photo40.jpg', 200.00, 15.00, 'Maison de charme');
+(1, 'Annulation gratuite jusqu\'à 24h avant l\'arrivée', 'Appartement moderne avec vue sur la ville, proche des commodités.', 'Wi-Fi, Climatisation, Cuisine équipée, Balcon', 'https://example.com/photos/appartement1.jpg', '120.00', '2.50', 'Appartement'),
+(2, 'Annulation gratuite jusqu\'à 7 jours avant l\'arrivée', 'Chalet spacieux en montagne, idéal pour les familles.', 'Cheminée, Parking gratuit, Proche des pistes', 'https://example.com/photos/chalet1.jpg', '250.00', '5.20', 'Chalet'),
+(3, 'Non remboursable', 'Chambre d\'hôtel confortable avec petit déjeuner inclus.', 'Wi-Fi, Télévision, Room service', 'https://example.com/photos/hotel1.jpg', '90.00', '3.10', 'Hôtel'),
+(4, 'Annulation gratuite jusqu\'à 14 jours avant l\'arrivée', 'Villa luxueuse avec piscine privée et grand jardin.', 'Piscine, Wi-Fi, Climatisation, Barbecue', 'https://example.com/photos/villa1.jpg', '450.00', '8.00', 'Villa'),
+(5, 'Annulation gratuite jusqu\'à 3 jours avant l\'arrivée', 'Emplacement pour tente avec accès aux sanitaires partagés.', 'Parking gratuit, Barbecue, Électricité', 'https://example.com/photos/camping1.jpg', '50.00', '1.00', 'Camping'),
+(6, 'Annulation gratuite jusqu\'à 48h avant l\'arrivée', 'Appartement avec deux chambres dans le centre historique.', 'Wi-Fi, Cuisine équipée, Machine à laver', 'https://example.com/photos/appartement2.jpg', '140.00', '2.30', 'Appartement'),
+(7, 'Non remboursable', 'Suite dans un hôtel 5 étoiles avec spa et restaurant gastronomique.', 'Wi-Fi, Piscine, Service en chambre 24/7', 'https://example.com/photos/hotel2.jpg', '200.00', '4.00', 'Hôtel'),
+(8, 'Annulation gratuite jusqu\'à 5 jours avant l\'arrivée', 'Riad traditionnel au cœur de la médina avec patio intérieur.', 'Wi-Fi, Climatisation, Petit déjeuner inclus', 'https://example.com/photos/riad1.jpg', '180.00', '3.50', 'Riad'),
+(9, 'Annulation gratuite jusqu\'à 48h avant l\'arrivée', 'Chambre dans une maison d\'hôtes avec accueil chaleureux.', 'Petit déjeuner inclus, Wi-Fi, Terrasse', 'https://example.com/photos/maison_hotes1.jpg', '75.00', '2.80', 'Maison d\'hôtes'),
+(10, 'Annulation gratuite jusqu\'à 10 jours avant l\'arrivée', 'Chalet moderne avec sauna et vue panoramique sur les montagnes.', 'Sauna, Parking, Proche des pistes', 'https://example.com/photos/chalet2.jpg', '300.00', '6.00', 'Chalet'),
+(11, 'Non remboursable', 'Bungalow en bord de plage avec accès direct à la mer.', 'Climatisation, Wi-Fi, Parking gratuit', 'https://example.com/photos/bungalow1.jpg', '100.00', '1.50', 'Bungalow'),
+(12, 'Annulation gratuite jusqu\'à 24h avant l\'arrivée', 'Lit en dortoir dans une auberge de jeunesse conviviale.', 'Wi-Fi, Cuisine commune, Salon partagé', 'https://example.com/photos/auberge1.jpg', '30.00', '0.50', 'Auberge'),
+(13, 'Non-fumeur', 'Appartement lumineux avec balcon et vue sur la ville', 'Wi-Fi, Climatisation, Cuisine équipée', 'photo11.jpg', '150.00', '12.00', 'Appartement'),
+(14, 'Animaux acceptés', 'Maison isolée avec grand jardin et cheminée', 'Wi-Fi, Parking, Cuisine équipée', 'photo12.jpg', '200.00', '20.00', 'Maison de campagne'),
+(15, 'Non-fumeur', 'Chambre confortable avec petit-déjeuner inclus', 'Wi-Fi, Salle de bain privée, Vue sur le jardin', 'photo13.jpg', '75.00', '10.00', 'Chambre d\'hôtes'),
+(16, 'Non-fumeur', 'Villa privée avec piscine et salle de sport', 'Piscine, Jacuzzi, Cuisine haut de gamme', 'photo14.jpg', '800.00', '50.00', 'Villa de luxe'),
+(17, 'Non-fumeur', 'Chalet chaleureux près des stations de ski', 'Cheminée, Parking, Sauna', 'photo15.jpg', '250.00', '25.00', 'Chalet en montagne'),
+(18, 'Animaux acceptés', 'Bungalow cosy avec accès direct à la plage', 'Terrasse, Wi-Fi, Climatisation', 'photo16.jpg', '180.00', '22.00', 'Bungalow sur la plage'),
+(19, 'Non-fumeur', 'Studio compact avec toutes les commodités modernes', 'Wi-Fi, Cuisine équipée, Climatisation', 'photo17.jpg', '120.00', '14.00', 'Studio moderne'),
+(20, 'Non-fumeur', 'Riad authentique avec patio traditionnel', 'Climatisation, Hammam, Petit-déjeuner inclus', 'photo18.jpg', '220.00', '20.00', 'Riad marocain'),
+(21, 'Animaux acceptés', 'Yourte avec vue panoramique, idéale pour un séjour nature', 'Lit double, Poêle à bois, Activités en plein air', 'photo19.jpg', '90.00', '8.00', 'Yourte éco-responsable'),
+(22, 'Non-fumeur', 'Cabane dans les arbres avec terrasse et vue exceptionnelle', 'Wi-Fi, Petit-déjeuner inclus, Proche des sentiers', 'photo20.jpg', '170.00', '18.00', 'Cabane perchée'),
+(23, 'Non-fumeur', 'Penthouse luxueux avec vue imprenable sur la ville', 'Terrasse, Jacuzzi, Wi-Fi haut débit', 'photo21.jpg', '400.00', '15.00', 'Penthouse'),
+(24, 'Animaux acceptés', 'Maison conviviale dans un quartier calme', 'Cuisine équipée, Wi-Fi, Parking privé', 'photo22.jpg', '140.00', '13.00', 'Maison mitoyenne'),
+(25, 'Non-fumeur', 'Tiny House éco-conçue au cœur de la nature', 'Cuisine compacte, Terrasse, Poêle à bois', 'photo23.jpg', '100.00', '7.00', 'Tiny House'),
+(26, 'Non-fumeur', 'Maison moderne avec grandes baies vitrées', 'Piscine, Parking, Climatisation', 'photo24.jpg', '300.00', '20.00', 'Maison d\'architecte'),
+(27, 'Non-fumeur', 'Studio avec accès direct à la plage', 'Cuisine équipée, Terrasse, Climatisation', 'photo25.jpg', '110.00', '9.00', 'Studio en bord de mer'),
+(28, 'Non-fumeur', 'Hôtel design avec services personnalisés', 'Wi-Fi, Bar, Service en chambre', 'photo26.jpg', '250.00', '16.00', 'Hôtel boutique'),
+(29, 'Animaux acceptés', 'Gîte familial dans une ferme rénovée', 'Wi-Fi, Parking, Activités pour enfants', 'photo27.jpg', '180.00', '22.00', 'Gîte rural'),
+(30, 'Non-fumeur', 'Loft spacieux avec une décoration industrielle', 'Wi-Fi, Cuisine équipée, Climatisation', 'photo28.jpg', '300.00', '18.00', 'Appartement loft'),
+(31, 'Non-fumeur', 'Villa avec piscine et vue sur la mer Méditerranée', 'Piscine, Jardin, Parking privé', 'photo29.jpg', '450.00', '30.00', 'Villa méditerranéenne'),
+(32, 'Animaux acceptés', 'Maison en pierre avec charme authentique', 'Cheminée, Wi-Fi, Proche des sentiers de randonnée', 'photo30.jpg', '130.00', '14.00', 'Maison traditionnelle'),
+(33, 'Non-fumeur', 'Riad avec piscine intérieure et service haut de gamme', 'Hammam, Wi-Fi, Service en chambre', 'photo31.jpg', '500.00', '40.00', 'Riad de luxe'),
+(34, 'Animaux non acceptés', 'Cabane sur l\'eau avec vue panoramique', 'Kayak inclus, Terrasse, Cuisine équipée', 'photo32.jpg', '200.00', '25.00', 'Cabane flottante'),
+(35, 'Non-fumeur', 'Chambre majestueuse dans un château historique', 'Petit-déjeuner, Wi-Fi, Visite du château', 'photo33.jpg', '350.00', '20.00', 'Chambre dans un château'),
+(36, 'Animaux acceptés', 'Appartement spacieux pour les familles', 'Wi-Fi, Cuisine équipée, Parking gratuit', 'photo34.jpg', '150.00', '10.00', 'Appartement familial'),
+(37, 'Non-fumeur', 'Maison avec terrasse et accès direct au lac', 'Canoë inclus, Wi-Fi, Barbecue', 'photo35.jpg', '300.00', '30.00', 'Maison au bord d\'un lac'),
+(38, 'Animaux acceptés', 'Bungalow écologique au cœur de la jungle', 'Ventilateur, Terrasse, Cuisine équipée', 'photo36.jpg', '100.00', '20.00', 'Bungalow jungle'),
+(39, 'Non-fumeur', 'Chalet avec vue imprenable sur le lac', 'Cheminée, Wi-Fi, Activités nautiques', 'photo37.jpg', '250.00', '18.00', 'Chalet au bord de l\'eau'),
+(40, 'Non-fumeur', 'Studio pratique pour un séjour en ville', 'Climatisation, Wi-Fi, Cuisine équipée', 'photo38.jpg', '80.00', '12.00', 'Studio urbain'),
+(41, 'Animaux acceptés', 'Villa entourée de palmiers avec piscine privée', 'Piscine, Wi-Fi, Parking', 'photo39.jpg', '600.00', '50.00', 'Villa tropicale'),
+(42, 'Non-fumeur', 'Maison en centre-ville avec terrasse fleurie', 'Cuisine équipée, Wi-Fi, Climatisation', 'photo40.jpg', '200.00', '15.00', 'Maison de charme');
 
 -- --------------------------------------------------------
 
@@ -117,23 +109,21 @@ INSERT INTO `hebergement` (`id`, `conditions_reservation`, `description`, `equip
 -- Structure de la table `pays`
 --
 
-DROP TABLE IF EXISTS `pays`;
-CREATE TABLE IF NOT EXISTS `pays` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `pays` (
+  `id` bigint(20) NOT NULL,
   `fair_score` decimal(5,2) NOT NULL,
-  `nom` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `nom` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `pays`
 --
 
 INSERT INTO `pays` (`id`, `fair_score`, `nom`) VALUES
-(1, 4.5, 'France'),
-(2, 4.3, 'Allemagne'),
-(3, 3.8, 'Espagne'),
-(4, 3.9, 'Italie');
+(1, '4.50', 'France'),
+(2, '4.30', 'Allemagne'),
+(3, '3.80', 'Espagne'),
+(4, '3.90', 'Italie');
 
 -- --------------------------------------------------------
 
@@ -141,14 +131,12 @@ INSERT INTO `pays` (`id`, `fair_score`, `nom`) VALUES
 -- Structure de la table `restauration`
 --
 
-DROP TABLE IF EXISTS `restauration`;
-CREATE TABLE IF NOT EXISTS `restauration` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `restauration` (
+  `id` bigint(20) NOT NULL,
   `prix_moyenne` decimal(10,2) NOT NULL,
   `tauxco2` decimal(10,2) DEFAULT NULL,
-  `type_restaurant` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `type_restaurant` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -156,14 +144,11 @@ CREATE TABLE IF NOT EXISTS `restauration` (
 -- Structure de la table `role`
 --
 
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE IF NOT EXISTS `role` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `nom_profil` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `id_user` bigint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK8qjyc7wgcql5ngo85w7d61k9y` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `role` (
+  `id` bigint(20) NOT NULL,
+  `nom_profil` varchar(50) NOT NULL,
+  `id_user` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -171,19 +156,17 @@ CREATE TABLE IF NOT EXISTS `role` (
 -- Structure de la table `transport`
 --
 
-DROP TABLE IF EXISTS `transport`;
-CREATE TABLE IF NOT EXISTS `transport` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `transport` (
+  `id` bigint(20) NOT NULL,
   `estimation_prix` double NOT NULL,
   `tauxco2` double NOT NULL,
-  `type_transport` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `ville_depart` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `ville_destination` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `type_transport` varchar(50) NOT NULL,
+  `ville_depart` varchar(255) NOT NULL,
+  `ville_destination` varchar(255) NOT NULL,
   `date_depart` date DEFAULT NULL,
   `date_retour` date DEFAULT NULL,
-  `duree` time(6) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `duree` time(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `transport`
@@ -247,16 +230,13 @@ INSERT INTO `transport` (`id`, `estimation_prix`, `tauxco2`, `type_transport`, `
 -- Structure de la table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `mot_de_passe` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `nom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `prenom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `users` (
+  `id` bigint(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `mot_de_passe` varchar(255) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `users`
@@ -264,7 +244,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `email`, `mot_de_passe`, `nom`, `prenom`) VALUES
 (1, 'arfa@gmail.com', 'Arfaben12!', 'Moustapha', 'Araaft'),
-(2, 'manel@gmail.com', 'Manel12', 'GU', 'Manel');
+(2, 'manel@gmail.com', 'Manel12', 'GU', 'Manel'),
+(3, 'bty@gmail.com', '2025economad!!', 'Timofte', 'Betty');
 
 -- --------------------------------------------------------
 
@@ -272,25 +253,22 @@ INSERT INTO `users` (`id`, `email`, `mot_de_passe`, `nom`, `prenom`) VALUES
 -- Structure de la table `ville`
 --
 
-DROP TABLE IF EXISTS `ville`;
-CREATE TABLE IF NOT EXISTS `ville` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `nom` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `id_pays` bigint NOT NULL,
+CREATE TABLE `ville` (
+  `id` bigint(20) NOT NULL,
+  `nom` varchar(100) NOT NULL,
+  `id_pays` bigint(20) NOT NULL,
   `pib` double NOT NULL,
-  `population` bigint NOT NULL,
-  `taux_co2` double NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKaxs0bkhk2wqmwevrwptgwfy9g` (`id_pays`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `population` bigint(20) NOT NULL,
+  `taux_co2` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `ville`
 --
 
-INSERT INTO `ville` (`id`, `nom`, `id_pays`,`pib`, `population`, `taux_co2`) VALUES
+INSERT INTO `ville` (`id`, `nom`, `id_pays`, `pib`, `population`, `taux_co2`) VALUES
 (1, 'Paris', 1, 70800, 2148000, 4.2),
-(2, 'Marseille', 1, 47000, 861635, 4.0),
+(2, 'Marseille', 1, 47000, 861635, 4),
 (3, 'Lyon', 1, 73800, 515695, 4.1),
 (4, 'Toulouse', 1, 56100, 479180, 3.7),
 (5, 'Nice', 1, 40000, 343000, 3.5),
@@ -298,7 +276,7 @@ INSERT INTO `ville` (`id`, `nom`, `id_pays`,`pib`, `population`, `taux_co2`) VAL
 (7, 'Strasbourg', 1, 48000, 280000, 3.8),
 (8, 'Montpellier', 1, 41000, 290000, 3.6),
 (9, 'Bordeaux', 1, 50000, 250000, 3.7),
-(10, 'Lille', 1, 46000, 232000, 4.0),
+(10, 'Lille', 1, 46000, 232000, 4),
 (11, 'Rennes', 1, 35000, 217000, 3.3),
 (12, 'Le Havre', 1, 45000, 172000, 3.5),
 (13, 'Saint-Étienne', 1, 34000, 171000, 3.3),
@@ -330,7 +308,7 @@ INSERT INTO `ville` (`id`, `nom`, `id_pays`,`pib`, `population`, `taux_co2`) VAL
 (39, 'Chambéry', 1, 44000, 62000, 3.4),
 (40, 'Niort', 1, 30000, 59000, 2.9),
 (41, 'Douai', 1, 31000, 41000, 3.3),
-(42, 'Montauban', 1, 32000, 60000, 3.0),
+(42, 'Montauban', 1, 32000, 60000, 3),
 (43, 'Angoulême', 1, 29000, 43000, 2.8),
 (44, 'Sète', 1, 35000, 43000, 3.3),
 (45, 'Le Puy-en-Velay', 1, 22000, 20000, 2.6),
@@ -340,26 +318,146 @@ INSERT INTO `ville` (`id`, `nom`, `id_pays`,`pib`, `population`, `taux_co2`) VAL
 (49, 'Villers-Cotterêts', 1, 21000, 15000, 2.8),
 (50, 'Échirolles', 1, 34000, 37000, 3.2);
 
-
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `voyage`
 --
 
-DROP TABLE IF EXISTS `voyage`;
-CREATE TABLE IF NOT EXISTS `voyage` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `voyage` (
+  `id` bigint(20) NOT NULL,
   `date_depart` date NOT NULL,
   `date_retour` date NOT NULL,
-  `id_user` bigint NOT NULL,
-  `ville_depart` bigint NOT NULL,
-  `ville_destination` bigint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKnvslq0hqkpfpve0mi9bwqq67c` (`id_user`),
-  KEY `FKoqsxmhx2wk0owfbgonokjrh4g` (`ville_depart`),
-  KEY `FK3vum1jg6n8qsqpxrk9a5fpmmh` (`ville_destination`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id_user` bigint(20) NOT NULL,
+  `ville_depart` bigint(20) NOT NULL,
+  `ville_destination` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `consommation`
+--
+ALTER TABLE `consommation`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKm8v8dn0qq32rylgwic8d6j28q` (`id_restauration`),
+  ADD KEY `FK61amtkv49jffag45c06574cx2` (`id_transport`),
+  ADD KEY `FKsgwlyblb80bnf340gilio38df` (`id_voyage`),
+  ADD KEY `FKfvnqklkp6neoo8f4dmkijev00` (`id_hebergement`);
+
+--
+-- Index pour la table `hebergement`
+--
+ALTER TABLE `hebergement`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `pays`
+--
+ALTER TABLE `pays`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `restauration`
+--
+ALTER TABLE `restauration`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK8qjyc7wgcql5ngo85w7d61k9y` (`id_user`);
+
+--
+-- Index pour la table `transport`
+--
+ALTER TABLE `transport`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`);
+
+--
+-- Index pour la table `ville`
+--
+ALTER TABLE `ville`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKaxs0bkhk2wqmwevrwptgwfy9g` (`id_pays`);
+
+--
+-- Index pour la table `voyage`
+--
+ALTER TABLE `voyage`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKnvslq0hqkpfpve0mi9bwqq67c` (`id_user`),
+  ADD KEY `FKoqsxmhx2wk0owfbgonokjrh4g` (`ville_depart`),
+  ADD KEY `FK3vum1jg6n8qsqpxrk9a5fpmmh` (`ville_destination`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `consommation`
+--
+ALTER TABLE `consommation`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `hebergement`
+--
+ALTER TABLE `hebergement`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT pour la table `pays`
+--
+ALTER TABLE `pays`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `restauration`
+--
+ALTER TABLE `restauration`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `role`
+--
+ALTER TABLE `role`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `transport`
+--
+ALTER TABLE `transport`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- AUTO_INCREMENT pour la table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `ville`
+--
+ALTER TABLE `ville`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- AUTO_INCREMENT pour la table `voyage`
+--
+ALTER TABLE `voyage`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées
