@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : dim. 19 jan. 2025 à 20:15
--- Version du serveur : 8.3.0
--- Version de PHP : 7.4.33
+-- Généré le : dim. 19 jan. 2025 à 22:46
+-- Version du serveur : 9.1.0
+-- Version de PHP : 8.3.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -74,44 +74,40 @@ INSERT INTO `hebergement` (`id`, `conditions_reservation`, `description`, `equip
 (2, 'Annulation gratuite jusqu\'à 7 jours avant l\'arrivée', 'Chalet spacieux en montagne, idéal pour les familles.', 'Cheminée, Parking gratuit, Proche des pistes', 'hebergements/appartement/1', 250.00, 5.20, 'Chalet', 3),
 (3, 'Non remboursable', 'Chambre d\'hôtel confortable avec petit déjeuner inclus.', 'Wi-Fi, Télévision, Room service', 'hebergements/hotel/1', 90.00, 3.10, 'Hôtel', 2),
 (4, 'Annulation gratuite jusqu\'à 14 jours avant l\'arrivée', 'Villa luxueuse avec piscine privée et grand jardin.', 'Piscine, Wi-Fi, Climatisation, Barbecue', 'hebergements/appartement/3', 450.00, 8.00, 'Villa', 5),
-(5, 'Annulation gratuite jusqu\'à 3 jours avant l\'arrivée', 'Emplacement pour tente avec accès aux sanitaires partagés.', 'Parking gratuit, Barbecue, Électricité', 'hebergements/appartement/4', 50.00, 1.00, 'Camping', 4),
 (6, 'Annulation gratuite jusqu\'à 48h avant l\'arrivée', 'Appartement avec deux chambres dans le centre historique.', 'Wi-Fi, Cuisine équipée, Machine à laver', 'hebergements/appartement/5', 140.00, 2.30, 'Appartement', 1),
 (7, 'Non remboursable', 'Suite dans un hôtel 5 étoiles avec spa et restaurant gastronomique.', 'Wi-Fi, Piscine, Service en chambre 24/7', 'hebergements/hotel/2', 200.00, 4.00, 'Hôtel', 1),
-(8, 'Annulation gratuite jusqu\'à 5 jours avant l\'arrivée', 'Riad traditionnel au cœur de la médina avec patio intérieur.', 'Wi-Fi, Climatisation, Petit déjeuner inclus', 'hebergements/appartement/3', 180.00, 3.50, 'Riad', 5),
-(9, 'Annulation gratuite jusqu\'à 48h avant l\'arrivée', 'Chambre dans une maison d\'hôtes avec accueil chaleureux.', 'Petit déjeuner inclus, Wi-Fi, Terrasse', 'hebergements/auberge/1', 75.00, 2.80, 'Maison d\'hôtes', 1),
+(8, 'Annulation gratuite jusqu\'à 5 jours avant l\'arrivée', 'Riad traditionnel au cœur de la médina avec patio intérieur.', 'Wi-Fi, Climatisation, Petit déjeuner inclus', 'hebergements/appartement/3', 180.00, 3.50, 'Villa', 5),
 (10, 'Annulation gratuite jusqu\'à 10 jours avant l\'arrivée', 'Chalet moderne avec sauna et vue panoramique sur les montagnes.', 'Sauna, Parking, Proche des pistes', 'hebergements/appartement/7', 300.00, 6.00, 'Chalet', 5),
-(11, 'Non remboursable', 'Bungalow en bord de plage avec accès direct à la mer.', 'Climatisation, Wi-Fi, Parking gratuit', 'hebergements/hotel/6', 100.00, 1.50, 'Bungalow', 5),
-(12, 'Annulation gratuite jusqu\'à 24h avant l\'arrivée', 'Lit en dortoir dans une auberge de jeunesse conviviale.', 'Wi-Fi, Cuisine commune, Salon partagé', 'hebergements/dortoir/1', 30.00, 0.50, 'Auberge', 1),
+(11, 'Non remboursable', 'Bungalow en bord de plage avec accès direct à la mer.', 'Climatisation, Wi-Fi, Parking gratuit', 'hebergements/hotel/6', 100.00, 1.50, 'Hôtel', 5),
 (13, 'Non-fumeur', 'Appartement lumineux avec balcon et vue sur la ville', 'Wi-Fi, Climatisation, Cuisine équipée', 'hebergements/appartement/8', 150.00, 12.00, 'Appartement', 2),
-(14, 'Animaux acceptés', 'Maison isolée avec grand jardin et cheminée', 'Wi-Fi, Parking, Cuisine équipée', 'hebergements/appartement/9', 200.00, 20.00, 'Maison de campagne', 4),
-(15, 'Non-fumeur', 'Chambre confortable avec petit-déjeuner inclus', 'Wi-Fi, Salle de bain privée, Vue sur le jardin', 'hebergements/hotel/7', 75.00, 10.00, 'Chambre d\'hôtes', 6),
-(16, 'Non-fumeur', 'Villa privée avec piscine et salle de sport', 'Piscine, Jacuzzi, Cuisine haut de gamme', 'hebergements/appartement/10', 800.00, 50.00, 'Villa de luxe', 2),
-(17, 'Non-fumeur', 'Chalet chaleureux près des stations de ski', 'Cheminée, Parking, Sauna', 'hebergements/appartement/11', 250.00, 25.00, 'Chalet en montagne', 4),
-(18, 'Animaux acceptés', 'Bungalow cosy avec accès direct à la plage', 'Terrasse, Wi-Fi, Climatisation', 'hebergements/hotel/8', 180.00, 22.00, 'Bungalow sur la plage', 5),
-(19, 'Non-fumeur', 'Studio compact avec toutes les commodités modernes', 'Wi-Fi, Cuisine équipée, Climatisation', 'hebergements/auberge/3', 120.00, 14.00, 'Studio moderne', 8),
-(20, 'Non-fumeur', 'Riad authentique avec patio traditionnel', 'Climatisation, Hammam, Petit-déjeuner inclus', 'hebergements/auberge/4', 220.00, 20.00, 'Riad ', 3),
-(21, 'Animaux acceptés', 'Yourte avec vue panoramique, idéale pour un séjour nature', 'Lit double, Poêle à bois, Activités en plein air', 'hebergements/auberge/5', 90.00, 8.00, 'Yourte éco-responsable', 3),
-(22, 'Non-fumeur', 'Cabane dans les arbres avec terrasse et vue exceptionnelle', 'Wi-Fi, Petit-déjeuner inclus, Proche des sentiers', 'hebergements/auberge/6', 170.00, 18.00, 'Cabane perchée', 7),
-(23, 'Non-fumeur', 'Penthouse luxueux avec vue imprenable sur la ville', 'Terrasse, Jacuzzi, Wi-Fi haut débit', 'hebergements/auberge/7', 400.00, 15.00, 'Penthouse', 6),
-(24, 'Animaux acceptés', 'Maison conviviale dans un quartier calme', 'Cuisine équipée, Wi-Fi, Parking privé', 'hebergements/hotel/9', 140.00, 13.00, 'Maison mitoyenne', 1),
-(25, 'Non-fumeur', 'Tiny House éco-conçue au cœur de la nature', 'Cuisine compacte, Terrasse, Poêle à bois', 'hebergements/hotel/10', 100.00, 7.00, 'Tiny House', 7),
-(26, 'Non-fumeur', 'Maison moderne avec grandes baies vitrées', 'Piscine, Parking, Climatisation', 'hebergements/hotel/11', 300.00, 20.00, 'Maison d\'architecte', NULL),
-(27, 'Non-fumeur', 'Studio avec accès direct à la plage', 'Cuisine équipée, Terrasse, Climatisation', 'hebergements/hotel/12', 110.00, 9.00, 'Studio en bord de mer', NULL),
-(28, 'Non-fumeur', 'Hôtel design avec services personnalisés', 'Wi-Fi, Bar, Service en chambre', 'hebergements/hotel/13', 250.00, 16.00, 'Hôtel boutique', NULL),
-(29, 'Animaux acceptés', 'Gîte familial dans une ferme rénovée', 'Wi-Fi, Parking, Activités pour enfants', 'hebergements/hotel/14', 180.00, 22.00, 'Gîte rural', NULL),
-(30, 'Non-fumeur', 'Loft spacieux avec une décoration industrielle', 'Wi-Fi, Cuisine équipée, Climatisation', 'hebergements/hotel/15', 300.00, 18.00, 'Appartement loft', NULL),
-(31, 'Non-fumeur', 'Villa avec piscine et vue sur la mer Méditerranée', 'Piscine, Jardin, Parking privé', 'hebergements/villa/1', 450.00, 30.00, 'Villa méditerranéenne', NULL),
-(32, 'Animaux acceptés', 'Maison en pierre avec charme authentique', 'Cheminée, Wi-Fi, Proche des sentiers de randonnée', 'hebergements/villa/2', 130.00, 14.00, 'Maison traditionnelle', NULL),
-(33, 'Non-fumeur', 'Riad avec piscine intérieure et service haut de gamme', 'Hammam, Wi-Fi, Service en chambre', 'hebergements/villa/3', 500.00, 40.00, 'Riad de luxe', NULL),
-(34, 'Animaux non acceptés', 'Cabane sur l\'eau avec vue panoramique', 'Kayak inclus, Terrasse, Cuisine équipée', 'hebergements/villa/4', 200.00, 25.00, 'Cabane flottante', NULL),
-(35, 'Non-fumeur', 'Chambre majestueuse dans un château historique', 'Petit-déjeuner, Wi-Fi, Visite du château', 'hebergements/hotel/16', 350.00, 20.00, 'Chambre dans un château', NULL),
-(36, 'Animaux acceptés', 'Appartement spacieux pour les familles', 'Wi-Fi, Cuisine équipée, Parking gratuit', 'hebergements/appartement/12', 150.00, 10.00, 'Appartement familial', NULL),
-(37, 'Non-fumeur', 'Maison avec terrasse et accès direct au lac', 'Canoë inclus, Wi-Fi, Barbecue', 'hebergements/appartement/13', 300.00, 30.00, 'Maison au bord d\'un lac', NULL),
-(38, 'Animaux acceptés', 'Bungalow écologique au cœur de la jungle', 'Ventilateur, Terrasse, Cuisine équipée', 'hebergements/appartement/14', 100.00, 20.00, 'Bungalow jungle', NULL),
-(39, 'Non-fumeur', 'Chalet avec vue imprenable sur le lac', 'Cheminée, Wi-Fi, Activités nautiques', 'hebergements/appartement/15', 250.00, 18.00, 'Chalet au bord de l\'eau', NULL),
-(40, 'Non-fumeur', 'Studio pratique pour un séjour en ville', 'Climatisation, Wi-Fi, Cuisine équipée', 'hebergements/appartement/16', 80.00, 12.00, 'Studio urbain', NULL),
-(41, 'Animaux acceptés', 'Villa entourée de palmiers avec piscine privée', 'Piscine, Wi-Fi, Parking', 'hebergements/villa/5', 600.00, 50.00, 'Villa tropicale', NULL),
-(42, 'Non-fumeur', 'Maison en centre-ville avec terrasse fleurie', 'Cuisine équipée, Wi-Fi, Climatisation', 'hebergements/appartement/17', 200.00, 15.00, 'Maison de charme', NULL);
+(14, 'Animaux acceptés', 'Maison isolée avec grand jardin et cheminée', 'Wi-Fi, Parking, Cuisine équipée', 'hebergements/appartement/9', 200.00, 20.00, 'Villa', 4),
+(16, 'Non-fumeur', 'Villa privée avec piscine et salle de sport', 'Piscine, Jacuzzi, Cuisine haut de gamme', 'hebergements/appartement/10', 800.00, 50.00, 'Villa', 2),
+(17, 'Non-fumeur', 'Chalet chaleureux près des stations de ski', 'Cheminée, Parking, Sauna', 'hebergements/appartement/11', 250.00, 25.00, 'Chalet', 4),
+(18, 'Animaux acceptés', 'Bungalow cosy avec accès direct à la plage', 'Terrasse, Wi-Fi, Climatisation', 'hebergements/hotel/8', 180.00, 22.00, 'Hôtel', 5),
+(19, 'Non-fumeur', 'Studio compact avec toutes les commodités modernes', 'Wi-Fi, Cuisine équipée, Climatisation', 'hebergements/auberge/3', 120.00, 14.00, 'Appartement', 8),
+(20, 'Non-fumeur', 'Riad authentique avec patio traditionnel', 'Climatisation, Hammam, Petit-déjeuner inclus', 'hebergements/auberge/4', 220.00, 20.00, 'Villa', 3),
+(21, 'Animaux acceptés', 'Yourte avec vue panoramique, idéale pour un séjour nature', 'Lit double, Poêle à bois, Activités en plein air', 'hebergements/auberge/5', 90.00, 8.00, 'Villa', 3),
+(22, 'Non-fumeur', 'Cabane dans les arbres avec terrasse et vue exceptionnelle', 'Wi-Fi, Petit-déjeuner inclus, Proche des sentiers', 'hebergements/auberge/6', 170.00, 18.00, 'Villa', 7),
+(23, 'Non-fumeur', 'Penthouse luxueux avec vue imprenable sur la ville', 'Terrasse, Jacuzzi, Wi-Fi haut débit', 'hebergements/auberge/7', 400.00, 15.00, 'Appartement', 6),
+(24, 'Animaux acceptés', 'Maison conviviale dans un quartier calme', 'Cuisine équipée, Wi-Fi, Parking privé', 'hebergements/hotel/9', 140.00, 13.00, 'Hôtel', 1),
+(25, 'Non-fumeur', 'Tiny House éco-conçue au cœur de la nature', 'Cuisine compacte, Terrasse, Poêle à bois', 'hebergements/hotel/10', 100.00, 7.00, 'Hôtel', 7),
+(26, 'Non-fumeur', 'Maison moderne avec grandes baies vitrées', 'Piscine, Parking, Climatisation', 'hebergements/hotel/11', 300.00, 20.00, 'Hôtel', 7),
+(27, 'Non-fumeur', 'Studio avec accès direct à la plage', 'Cuisine équipée, Terrasse, Climatisation', 'hebergements/hotel/12', 110.00, 9.00, 'Hôtel', 7),
+(28, 'Non-fumeur', 'Hôtel design avec services personnalisés', 'Wi-Fi, Bar, Service en chambre', 'hebergements/hotel/13', 250.00, 16.00, 'Hôtel', NULL),
+(29, 'Animaux acceptés', 'Gîte familial dans une ferme rénovée', 'Wi-Fi, Parking, Activités pour enfants', 'hebergements/hotel/14', 180.00, 22.00, 'Hôtel', 7),
+(30, 'Non-fumeur', 'Loft spacieux avec une décoration industrielle', 'Wi-Fi, Cuisine équipée, Climatisation', 'hebergements/hotel/15', 300.00, 18.00, 'Appartement', 7),
+(31, 'Non-fumeur', 'Villa avec piscine et vue sur la mer Méditerranée', 'Piscine, Jardin, Parking privé', 'hebergements/villa/1', 450.00, 30.00, 'Villa', 7),
+(32, 'Animaux acceptés', 'Maison en pierre avec charme authentique', 'Cheminée, Wi-Fi, Proche des sentiers de randonnée', 'hebergements/villa/2', 130.00, 14.00, 'Villa', 7),
+(33, 'Non-fumeur', 'Riad avec piscine intérieure et service haut de gamme', 'Hammam, Wi-Fi, Service en chambre', 'hebergements/villa/3', 500.00, 40.00, 'Villa', 7),
+(34, 'Animaux non acceptés', 'Cabane sur l\'eau avec vue panoramique', 'Kayak inclus, Terrasse, Cuisine équipée', 'hebergements/villa/4', 200.00, 25.00, 'Villa', 7),
+(35, 'Non-fumeur', 'Chambre majestueuse dans un château historique', 'Petit-déjeuner, Wi-Fi, Visite du château', 'hebergements/hotel/16', 350.00, 20.00, 'Hôtel', 7),
+(36, 'Animaux acceptés', 'Appartement spacieux pour les familles', 'Wi-Fi, Cuisine équipée, Parking gratuit', 'hebergements/appartement/12', 150.00, 10.00, 'Appartement', 1),
+(37, 'Non-fumeur', 'Maison avec terrasse et accès direct au lac', 'Canoë inclus, Wi-Fi, Barbecue', 'hebergements/appartement/13', 300.00, 30.00, 'Villa', 2),
+(38, 'Animaux acceptés', 'Bungalow écologique au cœur de la jungle', 'Ventilateur, Terrasse, Cuisine équipée', 'hebergements/appartement/14', 100.00, 20.00, 'Villa', 3),
+(39, 'Non-fumeur', 'Chalet avec vue imprenable sur le lac', 'Cheminée, Wi-Fi, Activités nautiques', 'hebergements/appartement/15', 250.00, 18.00, 'Chalet', 4),
+(40, 'Non-fumeur', 'Studio pratique pour un séjour en ville', 'Climatisation, Wi-Fi, Cuisine équipée', 'hebergements/appartement/16', 80.00, 12.00, 'Appartement', 5),
+(41, 'Animaux acceptés', 'Villa entourée de palmiers avec piscine privée', 'Piscine, Wi-Fi, Parking', 'hebergements/villa/5', 600.00, 50.00, 'Villa', 6),
+(42, 'Non-fumeur', 'Maison en centre-ville avec terrasse fleurie', 'Cuisine équipée, Wi-Fi, Climatisation', 'hebergements/appartement/17', 200.00, 15.00, 'Appartement', 7);
 
 -- --------------------------------------------------------
 
