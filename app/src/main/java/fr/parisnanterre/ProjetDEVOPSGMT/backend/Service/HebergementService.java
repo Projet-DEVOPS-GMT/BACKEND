@@ -8,8 +8,14 @@ import java.util.Optional;
 
 public interface HebergementService {
     List<Hebergement> getAllHebergements();
-    List<Hebergement> getHebergementsByCriteria(Ville ville, String typeHebergement); // Mise à jour ici
+
+    List<Hebergement> getHebergementsByCriteria(Ville ville, String typeHebergement);
+
     Optional<Hebergement> getHebergementById(Long id);
+
     Hebergement saveHebergement(Hebergement hebergement);
+
     void deleteHebergement(Long id);
+
+    List<String> getAllTypeHebergements();
 }

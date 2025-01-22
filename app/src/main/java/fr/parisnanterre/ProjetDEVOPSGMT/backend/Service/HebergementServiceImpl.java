@@ -50,4 +50,9 @@ public class HebergementServiceImpl implements HebergementService {
     public void deleteHebergement(Long id) {
         hebergementRepository.deleteById(id);
     }
+
+    @Override
+    public List<String> getAllTypeHebergements() {
+        return hebergementRepository.findDistinctTypeHebergement();
+    }
 }

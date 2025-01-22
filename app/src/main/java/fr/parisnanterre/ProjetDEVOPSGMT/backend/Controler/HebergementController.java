@@ -16,12 +16,12 @@ import java.util.Optional;
 public class HebergementController {
 
     private final HebergementService hebergementService;
-    private final VilleService villeService;  // Inject VilleService
+    private final VilleService villeService;
 
     @Autowired
     public HebergementController(HebergementService hebergementService, VilleService villeService) {
         this.hebergementService = hebergementService;
-        this.villeService = villeService;  // Inject VilleService via le constructeur
+        this.villeService = villeService;
     }
 
     @GetMapping
@@ -30,32 +30,38 @@ public class HebergementController {
     }
 
     @GetMapping("/search")
-    public List<Hebergement> getHebergementsByCriteria(
+    public ResponseEntity<?> getHebergementsByCriteria(
             @RequestParam(required = false) String ville,
             @RequestParam(required = false) String typeHebergement) {
-        
+
         Ville villeObj = null;
         if (ville != null && !ville.isEmpty()) {
-            // Recherche de la ville dans la base de données
-            villeObj = villeService.getVilleByName(ville); // Récupérer l'objet Ville à partir du nom
+            villeObj = villeService.getVilleByName(ville);
         }
-        
-        // Passer l'objet Ville au lieu de la chaîne de caractères
+
+        if (ville != null && villeObj == null) {
+            return ResponseEntity.ok("Aucun hébergement trouvé pour cette ville.");
+        }
+
+        List<Hebergement> result;
         if (villeObj != null && typeHebergement != null) {
-            return hebergementService.getHebergementsByCriteria(villeObj, typeHebergement);
+            result = hebergementService.getHebergementsByCriteria(villeObj, typeHebergement);
         } else if (villeObj != null) {
-            return hebergementService.getHebergementsByCriteria(villeObj, null);
+            result = hebergementService.getHebergementsByCriteria(villeObj, null);
         } else if (typeHebergement != null) {
-            return hebergementService.getHebergementsByCriteria(null, typeHebergement);
+            result = hebergementService.getHebergementsByCriteria(null, typeHebergement);
+        } else {
+            result = hebergementService.getAllHebergements();
         }
-    
-        return hebergementService.getAllHebergements();
+
+        return ResponseEntity.ok(result);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Hebergement> getHebergementById(@PathVariable Long id) {
         Optional<Hebergement> hebergement = hebergementService.getHebergementById(id);
         return hebergement.map(ResponseEntity::ok)
-                         .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -64,7 +70,8 @@ public class HebergementController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Hebergement> updateHebergement(@PathVariable Long id, @RequestBody Hebergement hebergementDetails) {
+    public ResponseEntity<Hebergement> updateHebergement(@PathVariable Long id,
+            @RequestBody Hebergement hebergementDetails) {
         Optional<Hebergement> hebergementOptional = hebergementService.getHebergementById(id);
 
         if (hebergementOptional.isPresent()) {
@@ -92,4 +99,14 @@ public class HebergementController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/types")
+    public ResponseEntity<List<String>> getAllTypeHebergements() {
+        List<String> types = hebergementService.getAllTypeHebergements();
+        if (types.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(types);
+    }
+
 }

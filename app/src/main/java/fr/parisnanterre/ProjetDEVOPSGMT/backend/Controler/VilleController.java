@@ -3,6 +3,7 @@ package fr.parisnanterre.ProjetDEVOPSGMT.backend.Controler;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Ville;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Service.VilleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,4 +52,14 @@ public class VilleController {
         villeService.deleteVille(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{nom}")
+public ResponseEntity<?> getVilleByName(@PathVariable String nom) {
+    Ville ville = villeService.getVilleByName(nom);
+    if (ville == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ville non trouvée.");
+    }
+    return ResponseEntity.ok(ville);
+}
+
 }
