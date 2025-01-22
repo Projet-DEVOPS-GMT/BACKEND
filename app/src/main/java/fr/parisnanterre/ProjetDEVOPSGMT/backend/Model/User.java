@@ -25,10 +25,10 @@ public class User {
     private String prenom;
 
     @Column(nullable = false, length = 100, unique = true)
-    private String email;
+    private String username;
 
-    @Column(name = "mot_de_passe", nullable = false, length = 255)
-    private String motDePasse;    
+    @Column(name = "password", nullable = false, length = 255)
+    private String password;    
 
     public Long getId() {
         return id;
@@ -54,20 +54,33 @@ public class User {
         this.prenom = prenom;
     }
 
-    public String getEmail() {
-        return email;
+
+    /**
+     * @return String return the username
+     */
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getMotDePasse() {
-        return motDePasse;
+    /**
+     * @return String return the password
+     */
+    public String getPassword() {
+        return password;
     }
 
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
