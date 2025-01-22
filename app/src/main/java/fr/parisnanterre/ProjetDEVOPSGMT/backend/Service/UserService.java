@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface UserService {
     List<User> getAllUsers();
     Optional<User> getUserById(Long id);
-    Optional<User> getUserByEmail(String email); // Recherche utilisateur par email
+    Optional<User> getUserByUsername(String username); // Recherche utilisateur par email
     User createUser(User user);
     User updateUser(Long id, User user);
     void deleteUser(Long id);
-    public User findByEmailAndPassword(String email, String password);
+    public Optional<User> findUserByUsernameAndPassword(String username, String password);
 }
