@@ -11,4 +11,5 @@ public interface VilleService {
     Ville createVille(Ville ville);
     Ville updateVille(Long id, Ville ville);
     void deleteVille(Long id);
+    Ville getVilleByName(String nom); // Méthode pour récupérer une ville par son nom
 }
