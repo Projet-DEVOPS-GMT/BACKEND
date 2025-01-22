@@ -49,11 +49,28 @@ public class VilleServiceImpl implements VilleService {
 
     @Override
     public Double calculateEcoScore(Ville ville) {
-        // Logique métier simplifiée : réduire le score si le CO2 est élevé, augmenter si PIB/population est faible
-        double score = 100.0; // Base
-        score -= ville.getTauxCo2() * 10; // Réduction proportionnelle au CO₂
-        score += 10000.0 / ville.getPopulation(); // Augmentation pour petites villes
-        score += ville.getPib() / 1000000; // Contribution du PIB (en millions)
-        return Math.max(0, Math.min(score, 100)); // Score entre 0 et 100
+        if (ville == null) {
+            throw new IllegalArgumentException("La ville ne peut pas être nulle.");
+        }
+
+        Double tauxCo2 = ville.getTauxCo2() != null ? ville.getTauxCo2() : 0.0;
+        Long population = ville.getPopulation() != null && ville.getPopulation() > 0 ? ville.getPopulation() : 1L;
+        Double pib = ville.getPib() != null ? ville.getPib() : 0.0;
+
+        System.out.println("Calcul de l'EcoScore pour la ville : " + ville.getNom());
+        System.out.println("Taux de CO2 : " + tauxCo2);
+        System.out.println("Population : " + population);
+        System.out.println("PIB : " + pib);
+
+        double score = 100.0;
+        score -= tauxCo2 * 10;
+        score += 10000.0 / population;
+        score += pib / 1000000;
+
+        double finalScore = Math.max(0, Math.min(score, 100));
+        System.out.println("EcoScore final : " + finalScore);
+
+        return finalScore;
     }
+
 }

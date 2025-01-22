@@ -48,7 +48,10 @@ public class VilleController {
         return ResponseEntity.ok().body(new Object() {
             public final String city = ville.getNom();
             public final double score = ecoScore;
-            public final Ville details = ville;
+            public final Long population = ville.getPopulation();
+            public final Double pib = ville.getPib();
+            public final Double tauxCo2 = ville.getTauxCo2();
+          
         });
     }
 
