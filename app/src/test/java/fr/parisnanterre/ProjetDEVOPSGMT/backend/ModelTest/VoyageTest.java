@@ -33,8 +33,8 @@ public class VoyageTest {
         user.setId(1L);
         user.setNom("Dupont");
         user.setPrenom("Jean");
-        user.setEmail("jean.dupont@example.com");
-        user.setMotDePasse("password123");
+        user.setUsername("jean.dupont@example.com");
+        user.setPassword("password123");
 
         // Créer un voyage
         voyage = new Voyage();
@@ -72,8 +72,8 @@ public class VoyageTest {
         nouvelUser.setId(2L);
         nouvelUser.setNom("Martin");
         nouvelUser.setPrenom("Claire");
-        nouvelUser.setEmail("claire.martin@example.com");
-        nouvelUser.setMotDePasse("newpassword123");
+        nouvelUser.setUsername("claire.martin@example.com");
+        nouvelUser.setPassword("newpassword123");
 
         voyage.setVilleDepart(nouvelleVilleDepart);
         voyage.setVilleDestination(nouvelleVilleDestination);

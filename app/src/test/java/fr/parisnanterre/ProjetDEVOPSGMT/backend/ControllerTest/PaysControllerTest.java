@@ -5,84 +5,103 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Controler.PaysController;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Pays;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Service.PaysService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.Optional;
 
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(PaysController.class)
-class PaysControllerTest {
+public class PaysControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Mock
     private PaysService paysService;
+
+    @InjectMocks
+    private PaysController paysController;
 
     @Autowired
     private ObjectMapper objectMapper;
 
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
     @Test
-    void testGetAllPays() throws Exception {
+    public void testGetAllPays() throws Exception {
         Pays pays1 = new Pays();
         pays1.setId(1L);
         pays1.setNom("France");
 
         Pays pays2 = new Pays();
         pays2.setId(2L);
-        pays2.setNom("Allemagne");
+        pays2.setNom("Espagne");
 
-        Mockito.when(paysService.getAllPays()).thenReturn(Arrays.asList(pays1, pays2));
+        when(paysService.getAllPays()).thenReturn(Arrays.asList(pays1, pays2));
 
         mockMvc.perform(get("/api/pays"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].nom").value("France"))
-                .andExpect(jsonPath("$[1].id").value(2))
-                .andExpect(jsonPath("$[1].nom").value("Allemagne"));
+                .andExpect(jsonPath("$[1].nom").value("Espagne"));
+
+        verify(paysService, times(1)).getAllPays();
     }
 
     @Test
-    void testGetPaysById() throws Exception {
+    public void testGetPaysById() throws Exception {
         Pays pays = new Pays();
         pays.setId(1L);
         pays.setNom("France");
 
-        Mockito.when(paysService.getPaysById(1L)).thenReturn(Optional.of(pays));
+        when(paysService.getPaysById(1L)).thenReturn(Optional.of(pays));
 
         mockMvc.perform(get("/api/pays/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.nom").value("France"));
+
+        verify(paysService, times(1)).getPaysById(1L);
     }
 
     @Test
-    void testCreatePays() throws Exception {
+    public void testCreatePays() throws Exception {
         Pays pays = new Pays();
-        pays.setId(1L);
-        pays.setNom("France");
+        pays.setNom("Italie");
 
-        Mockito.when(paysService.createPays(Mockito.any(Pays.class))).thenReturn(pays);
+        Pays savedPays = new Pays();
+        savedPays.setId(1L);
+        savedPays.setNom("Italie");
+
+        when(paysService.createPays(any(Pays.class))).thenReturn(savedPays);
 
         mockMvc.perform(post("/api/pays")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(pays)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.nom").value("France"));
+                .andExpect(jsonPath("$.nom").value("Italie"));
+
+        verify(paysService, times(1)).createPays(any(Pays.class));
     }
 
     @Test
-    void testUpdatePays() throws Exception {
+    public void testUpdatePays() throws Exception {
         Pays existingPays = new Pays();
         existingPays.setId(1L);
         existingPays.setNom("France");
@@ -91,7 +110,7 @@ class PaysControllerTest {
         updatedPays.setId(1L);
         updatedPays.setNom("Allemagne");
 
-        Mockito.when(paysService.updatePays(Mockito.eq(1L), Mockito.any(Pays.class))).thenReturn(updatedPays);
+        when(paysService.updatePays(eq(1L), any(Pays.class))).thenReturn(updatedPays);
 
         mockMvc.perform(put("/api/pays/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -99,15 +118,17 @@ class PaysControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.nom").value("Allemagne"));
+
+        verify(paysService, times(1)).updatePays(eq(1L), any(Pays.class));
     }
 
     @Test
-    void testDeletePays() throws Exception {
-        Mockito.doNothing().when(paysService).deletePays(1L);
+    public void testDeletePays() throws Exception {
+        doNothing().when(paysService).deletePays(1L);
 
         mockMvc.perform(delete("/api/pays/1"))
                 .andExpect(status().isNoContent());
 
-        Mockito.verify(paysService).deletePays(1L);
+        verify(paysService, times(1)).deletePays(1L);
     }
 }
