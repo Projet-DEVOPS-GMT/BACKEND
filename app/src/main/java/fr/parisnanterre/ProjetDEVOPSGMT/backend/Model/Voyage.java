@@ -24,7 +24,7 @@ public class Voyage {
 
     @ManyToOne
     @JoinColumn(name = "ville_destination", nullable = false)
-    private Ville villeDestination;
+    private String villeDestination;
 
     @Column(nullable = false)
     private LocalDate dateDepart;
@@ -52,11 +52,11 @@ public class Voyage {
         this.villeDepart = villeDepart;
     }
 
-    public Ville getVilleDestination() {
+    public String getVilleDestination() {
         return villeDestination;
     }
 
-    public void setVilleDestination(Ville villeDestination) {
+    public void setVilleDestination(String villeDestination) {
         this.villeDestination = villeDestination;
     }
 
