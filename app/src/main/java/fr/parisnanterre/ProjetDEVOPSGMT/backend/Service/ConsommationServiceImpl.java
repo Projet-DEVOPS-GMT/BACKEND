@@ -3,53 +3,42 @@ package fr.parisnanterre.ProjetDEVOPSGMT.backend.Service;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Consommation;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Repository.ConsommationRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class ConsommationServiceImpl implements ConsommationService {
+import org.springdoc.core.converters.models.Pageable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
-    private final ConsommationRepository consommationRepository;
+@Service
+public class ConsommationServiceImpl {
 
     @Autowired
-    public ConsommationServiceImpl(ConsommationRepository consommationRepository) {
-        this.consommationRepository = consommationRepository;
-    }
+    private ConsommationRepository consommationRepository;
 
-    @Override
+    public Consommation createConsommation(Consommation consommation) {
+        return consommationRepository.save(consommation);
+    }
     public List<Consommation> getAllConsommations() {
         return consommationRepository.findAll();
     }
-
-    @Override
+    
+    
     public Optional<Consommation> getConsommationById(Long id) {
         return consommationRepository.findById(id);
     }
 
-    @Override
-    public Consommation createConsommation(Consommation consommation) {
-        return consommationRepository.save(consommation);
+    public Consommation updateConsommation(Long id, Consommation consommation) {
+        if (consommationRepository.existsById(id)) {
+            consommation.setId(id);
+            return consommationRepository.save(consommation);
+        }
+        return null;
     }
 
-    @Override
     public void deleteConsommation(Long id) {
         consommationRepository.deleteById(id);
-    }
-
-    @Override
-    public Consommation updateConsommation(Long id, Consommation consommation) {
-        Optional<Consommation> existingConsommation = consommationRepository.findById(id);
-        if (existingConsommation.isPresent()) {
-            Consommation updatedConsommation = existingConsommation.get();
-            updatedConsommation.setType(consommation.getType());
-            updatedConsommation.setPrix(consommation.getPrix());
-            updatedConsommation.setTauxCO2(consommation.getTauxCO2());
-            return consommationRepository.save(updatedConsommation);
-        } else {
-            throw new RuntimeException("Consommation not found");
-        }
     }
 }
