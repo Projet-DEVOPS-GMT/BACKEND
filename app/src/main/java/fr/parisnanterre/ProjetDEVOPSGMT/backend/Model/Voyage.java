@@ -20,7 +20,7 @@ public class Voyage {
 
     @ManyToOne
     @JoinColumn(name = "ville_depart", nullable = false)
-    private Ville villeDepart;
+    private String villeDepart;
 
     @ManyToOne
     @JoinColumn(name = "ville_destination", nullable = false)
@@ -44,11 +44,11 @@ public class Voyage {
         this.id = id;
     }
 
-    public Ville getVilleDepart() {
+    public String getVilleDepart() {
         return villeDepart;
     }
 
-    public void setVilleDepart(Ville villeDepart) {
+    public void setVilleDepart(String villeDepart) {
         this.villeDepart = villeDepart;
     }
 
