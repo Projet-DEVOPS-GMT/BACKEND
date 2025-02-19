@@ -18,12 +18,8 @@ public class Voyage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "ville_depart", nullable = false)
     private String villeDepart;
 
-    @ManyToOne
-    @JoinColumn(name = "ville_destination", nullable = false)
     private String villeDestination;
 
     @Column(nullable = false)
