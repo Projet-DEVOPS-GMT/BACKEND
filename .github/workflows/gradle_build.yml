@@ -31,7 +31,7 @@ jobs:
           --health-timeout=5s
           --health-retries=5
 
-    steps:
+   teps:
       - uses: actions/checkout@v4
       
       - name: Set up JDK 17
@@ -49,13 +49,18 @@ jobs:
       - name: Build with Gradle Wrapper
         run: ./gradlew build
         env:
-          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/testdb
+          SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/testdb?serverTimezone=UTC&useSSL=false
           SPRING_DATASOURCE_USERNAME: testuser
           SPRING_DATASOURCE_PASSWORD: testpassword
+        # Utilise application-test.yml pendant les tests
+        # Si tu utilises Spring Profiles, tu peux ajouter ceci :
+        # SPRING_PROFILES_ACTIVE: test
 
       - name: Run tests
         run: ./gradlew test
         env:
-          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/testdb
+          SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/testdb?serverTimezone=UTC&useSSL=false
           SPRING_DATASOURCE_USERNAME: testuser
           SPRING_DATASOURCE_PASSWORD: testpassword
+        # Assurez-vous que le profile "test" est activé si nécessaire
+        # SPRING_PROFILES_ACTIVE: test
