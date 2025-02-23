@@ -1,15 +1,6 @@
 package fr.parisnanterre.ProjetDEVOPSGMT.backend.Model;
 
-import java.math.BigDecimal;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="consommation")
@@ -18,30 +9,22 @@ public class Consommation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String type;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal prix;
+    private String transportType;
+    private String ville;
+    private String restaurantType;
+    private String platType;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal tauxCO2;
+    @Column(nullable = false)
+    private Double montant;
 
-    @ManyToOne
-    @JoinColumn(name = "id_transport")
-    private Transport transport;
+    private String dateDepart;
+    private String dateArrivee;
 
-    @ManyToOne
-    @JoinColumn(name = "id_hebergement")
-    private Hebergement hebergement;
-
-    @ManyToOne
-    @JoinColumn(name = "id_restauration")
-    private Restauration restauration;
-
-    @ManyToOne
-    @JoinColumn(name = "id_voyage", nullable = false)
-    private Voyage voyage;
+    @Column(nullable = true)
+    private Double co2;  
 
     public Long getId() {
         return id;
@@ -59,52 +42,67 @@ public class Consommation {
         this.type = type;
     }
 
-    public BigDecimal getPrix() {
-        return prix;
+    public String getTransportType() {
+        return transportType;
     }
 
-    public void setPrix(BigDecimal prix) {
-        this.prix = prix;
+    public void setTransportType(String transportType) {
+        this.transportType = transportType;
     }
 
-    public BigDecimal getTauxCO2() {
-        return tauxCO2;
+    public String getVille() {
+        return ville;
     }
 
-    public void setTauxCO2(BigDecimal tauxCO2) {
-        this.tauxCO2 = tauxCO2;
+    public void setVille(String ville) {
+        this.ville = ville;
     }
 
-    public Transport getTransport() {
-        return transport;
+    public String getRestaurantType() {
+        return restaurantType;
     }
 
-    public void setTransport(Transport transport) {
-        this.transport = transport;
+    public void setRestaurantType(String restaurantType) {
+        this.restaurantType = restaurantType;
     }
 
-    public Hebergement getHebergement() {
-        return hebergement;
+    public String getPlatType() {
+        return platType;
     }
 
-    public void setHebergement(Hebergement hebergement) {
-        this.hebergement = hebergement;
+    public void setPlatType(String platType) {
+        this.platType = platType;
     }
 
-    public Restauration getRestauration() {
-        return restauration;
+    public Double getMontant() {
+        return montant;
     }
 
-    public void setRestauration(Restauration restauration) {
-        this.restauration = restauration;
+    public void setMontant(Double montant) {
+        this.montant = montant;
     }
 
-    public Voyage getVoyage() {
-        return voyage;
+    public String getDateDepart() {
+        return dateDepart;
     }
 
-    public void setVoyage(Voyage voyage) {
-        this.voyage = voyage;
+    public void setDateDepart(String dateDepart) {
+        this.dateDepart = dateDepart;
+    }
+
+    public String getDateArrivee() {
+        return dateArrivee;
+    }
+
+    public void setDateArrivee(String dateArrivee) {
+        this.dateArrivee = dateArrivee;
+    }
+
+    public Double getCo2() {
+        return co2;
+    }
+
+    public void setCo2(Double co2) {
+        this.co2 = co2;
     }
 }
-

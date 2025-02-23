@@ -1,44 +1,100 @@
 package fr.parisnanterre.ProjetDEVOPSGMT.backend.Controler;
 
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Consommation;
+import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Hebergement;
+import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.User;
+import fr.parisnanterre.ProjetDEVOPSGMT.backend.Repository.ConsommationRepository;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Service.ConsommationService;
+import fr.parisnanterre.ProjetDEVOPSGMT.backend.Service.ConsommationServiceImpl;
+
+import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
-
+import java.util.Map;
+import java.util.Optional;
 @RestController
 @RequestMapping("/api/consommations")
 public class ConsommationController {
-
     @Autowired
-    private ConsommationService consommationService;
+    private ConsommationServiceImpl consommationService;
+    private ConsommationRepository consommationRepository;
 
+    public ConsommationController(ConsommationServiceImpl consommationService, ConsommationRepository consommationRepository) {
+        this.consommationService = consommationService;
+        this.consommationRepository = consommationRepository;
+    }
 
     @GetMapping
-    public List<Consommation> getAllConsommations() {
-        return consommationService.getAllConsommations();
+    public ResponseEntity<List<Consommation>> getAllConsommations() {
+        System.out.println("Requête GET pour obtenir toutes les consommations reçue");
+        List<Consommation> consommations = consommationService.getAllConsommations();
+        return ResponseEntity.ok(consommations);
     }
+
 
     @PostMapping
-    public ResponseEntity<Consommation> createConsommation(@RequestBody Consommation consommation) {
- 
-        BigDecimal co2 = calculerCO2(consommation);
-        consommation.setTauxCO2(co2);
+    public ResponseEntity<?> enregistrerConsommation(@RequestBody Map<String, Object> consommationData) {
+        String type = (String) consommationData.get("type");
+
+        // Gestion correcte du type de "montant" (String ou Number)
+        Object montantObj = consommationData.get("montant");
+        Double montant = null;
+        if (montantObj instanceof String) {
+            montant = Double.parseDouble((String) montantObj);
+        } else if (montantObj instanceof Number) {
+            montant = ((Number) montantObj).doubleValue();
+        }
+
+        if (montant == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Montant invalide.");
+        }
+
+        // Créer la consommation
+        Consommation consommation = new Consommation();
+        consommation.setType(type);
+        consommation.setMontant(montant);
+
+        // Récupérer les autres valeurs en fonction du type de consommation
+        if ("transport".equals(type)) {
+            String transportType = (String) consommationData.get("transportType");
+            consommation.setTransportType(transportType);
+        } else if ("hebergement".equals(type)) {
+            String ville = (String) consommationData.get("ville");
+            consommation.setVille(ville);
+        }
+
+        // Gérer les dates si elles sont présentes
+        String dateDepart = (String) consommationData.get("dateDepart");
+        String dateArrivee = (String) consommationData.get("dateArrivee");
+        consommation.setDateDepart(dateDepart);
+        consommation.setDateArrivee(dateArrivee);
+
+        // Créer la consommation et renvoyer la réponse via le service
         Consommation savedConsommation = consommationService.createConsommation(consommation);
-        return ResponseEntity.ok(savedConsommation);
+    
+        // Vérifier si l'enregistrement a bien eu lieu
+        if (savedConsommation != null) {
+            return ResponseEntity.ok(savedConsommation);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erreur lors de l'enregistrement.");
+        }
     }
+
+
+    // @GetMapping("/{id}")
+    // public ResponseEntity<Consommation> getConsommationById(@PathVariable Long id) {
+
+    //     Optional<Consommation> consommation = consommationService.getConsommationById(id);
+    //     return consommation.map(ResponseEntity::ok)
+    //                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    // }
 
   
-    @GetMapping("/{id}")
-    public ResponseEntity<Consommation> getConsommationById(@PathVariable Long id) {
-        return consommationService.getConsommationById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<Consommation> updateConsommation(@PathVariable Long id, @RequestBody Consommation consommation) {
@@ -50,49 +106,9 @@ public class ConsommationController {
         }
     }
 
-  
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteConsommation(@PathVariable Long id) {
         consommationService.deleteConsommation(id);
         return ResponseEntity.noContent().build();
-    }
-
-
-    private BigDecimal calculerCO2(Consommation consommation) {
-        BigDecimal co2 = BigDecimal.ZERO;
-
-        // Calcul CO₂ pour les transports
-        if ("Transport".equals(consommation.getType())) {
-            if (consommation.getTransport() != null) {
-                double distance = calculerDistance(consommation.getTransport().getVilleDepart(), consommation.getTransport().getVilleDestination());
-                switch (consommation.getTransport().getTypeTransport()) {
-                    case "Avion":
-                        co2 = BigDecimal.valueOf(0.25 * distance); // En kg de CO₂ par km pour un vol
-                        break;
-                    case "Train":
-                        co2 = BigDecimal.valueOf(0.041 * distance); // En kg de CO₂ par km pour un train
-                        break;
-                    case "Bus":
-                        co2 = BigDecimal.valueOf(0.01 * distance); // En kg de CO₂ par km pour un bus
-                        break;
-                }
-            }
-        }
-        // Calcul CO₂ pour l'hébergement
-        else if ("Hébergement".equals(consommation.getType())) {
-            co2 = BigDecimal.valueOf(15 * consommation.getPrix().doubleValue()); // Estimation par nuit d'hôtel
-        }
-        // Calcul CO₂ pour la restauration
-        else if ("Restauration".equals(consommation.getType())) {
-            co2 = BigDecimal.valueOf(3 * consommation.getPrix().doubleValue()); // Estimation par repas
-        }
-
-        return co2;
-    }
-
-    // fonction pour estimer la distance entre deux villes (on va améliorer)
-    private double calculerDistance(String depart, String destination) {
-        // Pour l'instant, renvoyons une distance fictive
-        return 1000;  
     }
 }

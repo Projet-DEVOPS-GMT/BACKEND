@@ -52,8 +52,8 @@ public class Voyage {
         return villeDestination;
     }
 
-    public void setVilleDestination(String villeDestination) {
-        this.villeDestination = villeDestination;
+    public void setVilleDestination(String villeDestination2) {
+        this.villeDestination = villeDestination2;
     }
 
     public LocalDate getDateDepart() {
