@@ -12,4 +12,5 @@ public interface VilleService {
     Ville updateVille(Long id, Ville ville);
     void deleteVille(Long id);
     Ville getVilleByName(String nom); // Méthode pour récupérer une ville par son nom
+    Double calculateEcoScore(Ville ville);
 }
