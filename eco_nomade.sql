@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : dim. 19 jan. 2025 à 22:46
+-- Généré le : lun. 24 fév. 2025 à 15:45
 -- Version du serveur : 9.1.0
 -- Version de PHP : 8.3.14
 
@@ -30,19 +30,65 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `consommation`;
 CREATE TABLE IF NOT EXISTS `consommation` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `prix` decimal(10,2) NOT NULL,
-  `tauxco2` decimal(10,2) NOT NULL,
-  `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `id_hebergement` bigint DEFAULT NULL,
-  `id_restauration` bigint DEFAULT NULL,
-  `id_transport` bigint DEFAULT NULL,
-  `id_voyage` bigint NOT NULL,
+  `co2` double DEFAULT NULL,
+  `date_arrivee` varchar(255) DEFAULT NULL,
+  `date_depart` varchar(255) DEFAULT NULL,
+  `montant` double NOT NULL,
+  `plat_type` varchar(255) DEFAULT NULL,
+  `restaurant_type` varchar(255) DEFAULT NULL,
+  `transport_type` varchar(255) DEFAULT NULL,
+  `type` varchar(255) NOT NULL,
+  `ville` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `consommation`
+--
+
+INSERT INTO `consommation` (`id`, `co2`, `date_arrivee`, `date_depart`, `montant`, `plat_type`, `restaurant_type`, `transport_type`, `type`, `ville`) VALUES
+(1, NULL, '', '', 30, NULL, NULL, NULL, 'restauration', NULL),
+(2, NULL, '', '', 30, NULL, NULL, NULL, 'restauration', NULL),
+(3, NULL, '2025-02-28', '2025-02-23', 0, NULL, NULL, 'Train', 'transport', NULL),
+(4, NULL, '2025-02-28', '2025-02-23', 0, NULL, NULL, 'Train', 'transport', NULL),
+(5, NULL, '2025-02-28', '2025-02-23', 0, NULL, NULL, 'Train', 'transport', NULL),
+(6, NULL, '2025-02-21', '2025-02-22', 0, NULL, NULL, 'Train', 'transport', NULL),
+(7, NULL, '2025-04-04', '2025-03-15', 78, NULL, NULL, 'Train', 'transport', NULL),
+(8, NULL, '2025-02-27', '2025-02-22', 89, NULL, NULL, 'Train', 'transport', NULL),
+(9, NULL, '2025-02-19', '2025-02-27', 45, NULL, NULL, 'Train', 'transport', NULL),
+(10, NULL, '2025-02-19', '2025-02-21', 89, NULL, NULL, 'Train', 'transport', NULL),
+(11, NULL, '2025-02-19', '2025-02-21', 89, NULL, NULL, 'Train', 'transport', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `eco_action`
+--
+
+DROP TABLE IF EXISTS `eco_action`;
+CREATE TABLE IF NOT EXISTS `eco_action` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) NOT NULL,
+  `date_action` datetime NOT NULL,
+  `id_user` bigint NOT NULL,
+  `co2saved` double NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKm8v8dn0qq32rylgwic8d6j28q` (`id_restauration`),
-  KEY `FK61amtkv49jffag45c06574cx2` (`id_transport`),
-  KEY `FKsgwlyblb80bnf340gilio38df` (`id_voyage`),
-  KEY `FKfvnqklkp6neoo8f4dmkijev00` (`id_hebergement`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  KEY `id_user` (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `eco_action`
+--
+
+INSERT INTO `eco_action` (`id`, `description`, `date_action`, `id_user`, `co2saved`) VALUES
+(1, 'Éteindre la lumière en quittant une pièce', '2025-02-23 08:00:00', 1, 0),
+(2, 'Prendre le bus au lieu de la voiture', '2025-02-23 08:30:00', 2, 10),
+(3, 'Réduire la température de chauffage de 1°C', '2025-02-23 09:00:00', 1, 15),
+(4, 'Utiliser des sacs réutilisables', '2025-02-23 10:00:00', 2, 10),
+(6, 'Actions contre la faim', '2025-02-24 14:05:34', 7, 67),
+(7, 'Tri poubelle', '2025-02-24 15:29:01', 8, 17),
+(11, 'planter un arbre', '2025-02-24 16:15:30', 8, 20),
+(12, 'prendre le bus', '2025-02-24 16:16:42', 8, 23);
 
 -- --------------------------------------------------------
 
@@ -119,9 +165,9 @@ DROP TABLE IF EXISTS `pays`;
 CREATE TABLE IF NOT EXISTS `pays` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `fair_score` decimal(5,2) NOT NULL,
-  `nom` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nom` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `pays`
@@ -148,9 +194,9 @@ CREATE TABLE IF NOT EXISTS `restauration` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `prix_moyenne` decimal(10,2) NOT NULL,
   `tauxco2` decimal(10,2) DEFAULT NULL,
-  `type_restaurant` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `type_restaurant` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -161,11 +207,11 @@ CREATE TABLE IF NOT EXISTS `restauration` (
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `nom_profil` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nom_profil` varchar(50) NOT NULL,
   `id_user` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK8qjyc7wgcql5ngo85w7d61k9y` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -252,21 +298,27 @@ INSERT INTO `transport` (`id`, `estimation_prix`, `tauxco2`, `type_transport`, `
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `mot_de_passe` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `prenom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
+  `username` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  UNIQUE KEY `UKr43af9ap4edm43mmtq01oddj6` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `mot_de_passe`, `nom`, `prenom`) VALUES
-(1, 'arfa@gmail.com', 'Arfaben12!', 'Moustapha', 'Araaft'),
-(2, 'manel@gmail.com', 'Manel12', 'GU', 'Manel');
+INSERT INTO `users` (`id`, `nom`, `password`, `prenom`, `username`) VALUES
+(1, 'arafat', '$2a$10$dtbSLLgaXT.uHyEZlvQiIeEorZHUEFl56GK9mqimSHNXRVxmQvZWm', 'arafat', 'arafat@gmail.com'),
+(2, 'MOussa', '$2a$10$ijMegkaWdlXOwT6dyXjYZ.peRD0/rJSbWSBWBqk/HKp0GPUAEwIoy', 'MOussa', 'Moussa@gmail.com'),
+(3, 'Arafata  aaa', '$2a$10$gNVwfSq0FexKETf94D4ClekxUluYELX9zldgml0zsRcHaK1C5IiEK', 'Arafata  aaa', 'mous@gmail.com'),
+(4, 'abcdd', '$2a$10$EVYPYCayEm4B.vRxcW4nq.dWj.7zy96uOXIq5hEWoDrkfEPTPo5pO', 'abcdd', 'abcdd@gmail.com'),
+(5, 'abcd', '$2a$10$sjRsAusPf4l9FGc7fpI/bO.Xc6R4tttQlNjd2w4FujDOD4i7uP/76', 'abcd', 'abcde@gmail.com'),
+(6, 'MOUSTAPHA', '$2a$10$Qq0AJKS3AAHe0PIeVMKJkuTIzuMK1chF0jRUWjsN4M5eFUUffYgni', 'ARAFAT', 'test_nord@netysoft.com'),
+(7, 'MOUSTAPHA', '$2a$10$ITXMYhUHf3cxP1I.rqAn8O5KumI.skLn63MI1TZHSsLVx1Xa2ADhG', 'ARAFAT', 'ali@gmail.com'),
+(8, 'GUEMMAT', '$2a$10$g1uDP3dRWXvqTMTkYUO0jelgKqTN9iMxmuXYebV9/2TRTAQl.LLLq', 'Manel', 'manel@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -277,25 +329,30 @@ INSERT INTO `users` (`id`, `email`, `mot_de_passe`, `nom`, `prenom`) VALUES
 DROP TABLE IF EXISTS `ville`;
 CREATE TABLE IF NOT EXISTS `ville` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `nom` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nom` varchar(100) NOT NULL,
   `id_pays` bigint NOT NULL,
+  `pib` double NOT NULL,
+  `population` bigint NOT NULL,
+  `taux_co2` double NOT NULL,
+  `tauxCo2` double NOT NULL,
+  `fair_score` double NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FKaxs0bkhk2wqmwevrwptgwfy9g` (`id_pays`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `ville`
 --
 
-INSERT INTO `ville` (`id`, `nom`, `id_pays`) VALUES
-(1, 'Paris', 1),
-(2, 'Barcelone', 2),
-(3, 'Rome', 3),
-(4, 'Berlin', 4),
-(5, 'Lisbonne', 5),
-(6, 'Bruxelles', 6),
-(7, 'Amsterdam', 7),
-(8, 'Londres', 8);
+INSERT INTO `ville` (`id`, `nom`, `id_pays`, `pib`, `population`, `taux_co2`, `tauxCo2`, `fair_score`) VALUES
+(1, 'Paris', 1, 710000000000, 2100000, 5400, 5400, 4.6),
+(2, 'Barcelone', 2, 200000000000, 1600000, 4200, 4200, 0),
+(3, 'Rome', 3, 300000000000, 2800000, 4600, 4600, 0),
+(4, 'Berlin', 4, 1000000000000, 3500000, 3500, 3500, 0),
+(5, 'Lisbonne', 5, 250000000000, 500000, 4200, 4200, 0),
+(6, 'Bruxelles', 6, 500000000000, 1800000, 3000, 3000, 0),
+(7, 'Amsterdam', 7, 600000000000, 1000000, 3500, 3500, 0),
+(8, 'Londres', 8, 2500000000000, 8900000, 3200, 3200, 0);
 
 -- --------------------------------------------------------
 
@@ -315,20 +372,17 @@ CREATE TABLE IF NOT EXISTS `voyage` (
   KEY `FKnvslq0hqkpfpve0mi9bwqq67c` (`id_user`),
   KEY `FKoqsxmhx2wk0owfbgonokjrh4g` (`ville_depart`),
   KEY `FK3vum1jg6n8qsqpxrk9a5fpmmh` (`ville_destination`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Contraintes pour les tables déchargées
 --
 
 --
--- Contraintes pour la table `consommation`
+-- Contraintes pour la table `eco_action`
 --
-ALTER TABLE `consommation`
-  ADD CONSTRAINT `FK61amtkv49jffag45c06574cx2` FOREIGN KEY (`id_transport`) REFERENCES `transport` (`id`),
-  ADD CONSTRAINT `FKfvnqklkp6neoo8f4dmkijev00` FOREIGN KEY (`id_hebergement`) REFERENCES `hebergement` (`id`),
-  ADD CONSTRAINT `FKm8v8dn0qq32rylgwic8d6j28q` FOREIGN KEY (`id_restauration`) REFERENCES `restauration` (`id`),
-  ADD CONSTRAINT `FKsgwlyblb80bnf340gilio38df` FOREIGN KEY (`id_voyage`) REFERENCES `voyage` (`id`);
+ALTER TABLE `eco_action`
+  ADD CONSTRAINT `eco_action_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
 
 --
 -- Contraintes pour la table `hebergement`
