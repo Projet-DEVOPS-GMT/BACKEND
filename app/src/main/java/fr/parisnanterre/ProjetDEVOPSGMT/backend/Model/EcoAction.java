@@ -13,7 +13,7 @@ public class EcoAction {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
+    @Column(name="co2saved", nullable = false)
     private Double co2Saved;  // CO2 économisé en kg
 
     @Column(nullable = false)
