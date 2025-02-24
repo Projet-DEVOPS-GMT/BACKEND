@@ -18,13 +18,9 @@ public class Voyage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "ville_depart", nullable = false)
-    private Ville villeDepart;
+    private String villeDepart;
 
-    @ManyToOne
-    @JoinColumn(name = "ville_destination", nullable = false)
-    private Ville villeDestination;
+    private String villeDestination;
 
     @Column(nullable = false)
     private LocalDate dateDepart;
@@ -44,20 +40,20 @@ public class Voyage {
         this.id = id;
     }
 
-    public Ville getVilleDepart() {
+    public String getVilleDepart() {
         return villeDepart;
     }
 
-    public void setVilleDepart(Ville villeDepart) {
+    public void setVilleDepart(String villeDepart) {
         this.villeDepart = villeDepart;
     }
 
-    public Ville getVilleDestination() {
+    public String getVilleDestination() {
         return villeDestination;
     }
 
-    public void setVilleDestination(Ville villeDestination) {
-        this.villeDestination = villeDestination;
+    public void setVilleDestination(String villeDestination2) {
+        this.villeDestination = villeDestination2;
     }
 
     public LocalDate getDateDepart() {

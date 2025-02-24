@@ -23,6 +23,17 @@ public class Ville {
     @JoinColumn(name = "id_pays", nullable = false)
     private Pays pays;
 
+    @Column(nullable = false)
+    private Long population;
+
+    @Column(nullable = false)
+    private Double pib; // Produit Intérieur Brut en millions
+
+    @Column(nullable = false)
+    private Double tauxCo2; // Taux de CO₂ en tonnes/habitant/an
+
+
+
     public Long getId() {
         return id;
     }
@@ -45,6 +56,30 @@ public class Ville {
 
     public void setPays(Pays pays) {
         this.pays = pays;
+    }
+
+    public Long getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(Long population) {
+        this.population = population;
+    }
+
+    public Double getPib() {
+        return pib;
+    }
+
+    public void setPib(Double pib) {
+        this.pib = pib;
+    }
+
+    public Double getTauxCo2() {
+        return tauxCo2;
+    }
+
+    public void setTauxCo2(Double tauxCo2) {
+        this.tauxCo2 = tauxCo2;
     }
 
 }

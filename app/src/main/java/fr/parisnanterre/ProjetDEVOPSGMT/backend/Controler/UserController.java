@@ -5,10 +5,12 @@ import fr.parisnanterre.ProjetDEVOPSGMT.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -28,9 +30,9 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        return userService.getUserById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Optional<User> user = userService.getUserById(id);
+        return user.map(ResponseEntity::ok)
+                   .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PostMapping
@@ -42,19 +44,20 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
     @PostMapping("/login")
-    public ResponseEntity<User> loginUser(@RequestBody Map<String, String> loginRequest) {
-        String email = loginRequest.get("email");
+    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> loginRequest) {
+        String username = loginRequest.get("username");
         String password = loginRequest.get("password");
-
-        User user = userService.findByEmailAndPassword(email, password);
-        if (user != null) {
-            return ResponseEntity.ok(user); 
+    
+        Optional<User> user = userService.findUserByUsernameAndPassword(username, password);
+    
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); 
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Nom d'utilisateur ou mot de passe incorrect");
         }
     }
+    
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {

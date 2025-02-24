@@ -5,8 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TransportTest {
 
@@ -19,7 +20,6 @@ public class TransportTest {
 
     @Test
     public void testSettersAndGetters() {
-        // Définir les propriétés de transport
         transport.setId(1L);
         transport.setTypeTransport("Avion");
         transport.setTauxCO2(0.5);
@@ -29,7 +29,6 @@ public class TransportTest {
         transport.setDateDepart(LocalDate.of(2024, 12, 20));
         transport.setDateRetour(LocalDate.of(2024, 12, 27));
 
-        // Vérifier les valeurs
         assertEquals(1L, transport.getId());
         assertEquals("Avion", transport.getTypeTransport());
         assertEquals(0.5, transport.getTauxCO2());
@@ -42,7 +41,6 @@ public class TransportTest {
 
     @Test
     public void testUpdateValues() {
-        // Mettre à jour les valeurs
         transport.setTypeTransport("Train");
         transport.setTauxCO2(0.1);
         transport.setEstimationPrix(100.0);
@@ -51,7 +49,6 @@ public class TransportTest {
         transport.setDateDepart(LocalDate.of(2024, 12, 21));
         transport.setDateRetour(LocalDate.of(2024, 12, 22));
 
-        // Vérifier après mise à jour
         assertEquals("Train", transport.getTypeTransport());
         assertEquals(0.1, transport.getTauxCO2());
         assertEquals(100.0, transport.getEstimationPrix());
@@ -59,5 +56,14 @@ public class TransportTest {
         assertEquals("Marseille", transport.getVilleDestination());
         assertEquals(LocalDate.of(2024, 12, 21), transport.getDateDepart());
         assertEquals(LocalDate.of(2024, 12, 22), transport.getDateRetour());
+    }
+
+    @Test
+    public void testSetAndGetDuration() {
+        assertNull(transport.getDuration());
+
+        LocalTime expectedDuration = LocalTime.of(2, 45);
+        transport.setDuration(expectedDuration);
+        assertEquals(expectedDuration, transport.getDuration());
     }
 }

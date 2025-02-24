@@ -12,9 +12,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect 
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
 server:
-  port: 8080 
-
-# sncf.api.key="cba235f446bbe269cec5fec608ead671f1c4739be57df66f5cd4cc59"
+  port: 8080

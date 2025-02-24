@@ -84,8 +84,10 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 
 	annotationProcessor 'org.projectlombok:lombok'
-    implementation 'org.springframework.security:spring-security-crypto:6.4.1' 
+    implementation 'org.springframework.security:spring-security-crypto:6.4.1'
 
+    implementation 'org.springframework.boot:spring-boot-starter-security' 
+    testImplementation 'org.mockito:mockito-core'
 //	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
    
 }
@@ -99,7 +101,7 @@ java {
 }
 */
 group='fr.parisnanterre.ProjetDEVOPSGMT'
-version='0.0.1'
+version='0.0.3'
 application {
     // Define the main class for the application.
     mainClass ='fr.parisnanterre.ProjetDEVOPSGMT.backend.App'

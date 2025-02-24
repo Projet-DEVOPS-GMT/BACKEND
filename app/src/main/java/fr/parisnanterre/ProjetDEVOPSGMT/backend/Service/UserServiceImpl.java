@@ -3,7 +3,14 @@ package fr.parisnanterre.ProjetDEVOPSGMT.backend.Service;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.User;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -28,14 +35,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public User createUser(User user) {
-        // user.setMotDePasse(BCrypt.hashpw(user.getMotDePasse(), BCrypt.gensalt()));
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+        
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String password = user.getPassword();
+        user.setPassword(encoder.encode(password));
+        System.out.println(user.getPassword());
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new RuntimeException("Un utilisateur avec cet email existe déjà !");
         }
         return userRepository.save(user);
@@ -46,8 +57,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).map(existingUser -> {
             existingUser.setNom(user.getNom());
             existingUser.setPrenom(user.getPrenom());
-            existingUser.setEmail(user.getEmail());
-            existingUser.setMotDePasse(user.getMotDePasse());
+            existingUser.setUsername(user.getUsername());
+            existingUser.setPassword(user.getPassword());
             return userRepository.save(existingUser);
         }).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé avec l'id : " + id));
     }
@@ -57,15 +68,18 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    public User findByEmailAndPassword(String email, String password) {  // nous alons spring sécurite in V3 
-        Optional<User> userOptional = userRepository.findByEmail(email);
+    public Optional<User> findUserByUsernameAndPassword(String username, String password) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-
-            if (user.getMotDePasse().equals(password)) {
-                return user; 
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return Optional.of(user);
             }
         }
-        return null; 
+        return Optional.empty();
     }
+    
+
+   
 }
