@@ -375,7 +375,7 @@ restaurants ou visites.
 ○ Visualisation graphique des consommations.
 
 
-Version 0.2 - Économad
+== Version 0.2 - Économad
 
 Dans cette première version (0.2), nous avons ajouté deux grandes fonctionnalité.
 
@@ -400,6 +400,114 @@ Nous avons ajouté un historique des trajets réalisés, permettant à l'utilisa
 * Enregistrer les trajets fréquents pour les réutiliser facilement lors des prochaines
 
 recherches.
+
+== Version 0.0.3 - Économade
+
+=== Grandes fonctionnalités (F)
+
+==== F3 : Ajouter un listing des hôtels et restaurants
+
+Créer une nouvelle page de recherche affichant les hôtels et restaurants disponibles selon les critères de l'utilisateur (ville, type d'établissement, etc.).
+
+Récupérer les données via l'API REST du backend.
+
+Afficher les résultats sous forme de liste avec des détails comme le nom, l'adresse et une estimation des émissions CO₂ associées.
+
+==== F4 : Implémenter "Faire Score"
+
+Calculer un score ECO par ville basé sur :
+
+La taille de la ville,
+
+Le PIB,
+
+Le nombre d'habitants,
+
+Les taux de CO₂ annuels.
+
+Afficher ce score sur la page dédiée et le rendre consultable pour les utilisateurs.
+
+Permettre aux utilisateurs de comparer plusieurs villes.
+
+=== Petites fonctionnalités (f)
+
+==== f1 : Afficher l'historique
+
+Lister les consommations enregistrées par l'utilisateur connecté : Transport, hébergement, restauration.
+
+Calculer et afficher la somme totale des émissions CO₂ pour toutes les consommations.
+
+Assurer la cohérence des calculs en se basant sur les données déjà saisies.
+
+==== f2 : Améliorer la connexion des utilisateurs
+
+Lors de l'authentification, récupérer correctement l'ID et le mot de passe depuis la base de données.
+
+Assurer que les données sont sécurisées et respectent les bonnes pratiques en matière de gestion des mots de passe (ex. : hachage des mots de passe).
+
+== Version v1.0.0
+
+=== Grandes fonctionnalités (F)
+
+==== F5 : Fixer un seuil annuel de CO₂
+
+Implémenter une logique pour définir un plafond annuel de consommation de CO₂ par utilisateur.
+
+Permettre à l'utilisateur de voir son reste à consommer et ajuster ses voyages en conséquence.
+
+Proposer des villes accessibles en fonction du CO₂ restant, en utilisant les scores ECO de "Faire Score".
+
+==== F6 : Banque CO₂
+
+Offrir un suivi des actions positives pour l'environnement (ex. : plantation d'arbres, recyclage, etc.).
+
+Augmenter les points CO₂ disponibles pour voyager en fonction des actions enregistrées.
+
+Créer un dashboard interactif avec un design éco-friendly pour suivre les contributions de l'utilisateur et l'encourager à adopter des pratiques durables.
+
+=== Petites fonctionnalités (f)
+
+==== f3 : Intégrer des cartes Google Maps
+
+Ajouter des cartes pour afficher les positions des hôtels et restaurants.
+
+Permettre des interactions simples (ex. : cliquer pour voir les détails, tracer un itinéraire).
+
+==== f4 : Améliorer le design UI/UX
+
+Faciliter la navigation entre les pages (ajout d'un menu clair).
+
+Améliorer l'accessibilité avec un choix de couleurs adapté (contraste, lisibilité).
+
+Adapter l'application pour qu'elle soit responsive (mobile et desktop).
+
+== Résumé des fonctionnalités finales (Version 1.0.0)
+
+=== Grandes fonctionnalités (F)
+
+F1 : Comparateur de moyens de transport éco-responsable.
+
+F2 : Enregistrer les consommations de CO₂ et accéder à son historique.
+
+F3 : Listing des hôtels/restaurants.
+
+F4 : Faire Score (notation des villes).
+
+F5 : Fixer le seuil de CO₂ annuel.
+
+F6 : Banque CO₂ avec dashboard interactif.
+
+=== Petites fonctionnalités (f)
+
+f1 : Afficher l'historique des consommations.
+
+f2 : Sécurisation de la connexion.
+
+f3 : Intégration Google Maps.
+
+f4 : Amélioration Design UI/UX.
+
+
 
 Diagramme de l’organisation de la base des données :
 image::models/BDD.png[Diagramme de la base de données]
