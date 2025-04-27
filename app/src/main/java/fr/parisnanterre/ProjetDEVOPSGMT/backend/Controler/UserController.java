@@ -52,11 +52,12 @@ public class UserController {
         Optional<User> user = userService.findUserByUsernameAndPassword(username, password);
     
         if (user.isPresent()) {
-            return ResponseEntity.ok(user);
+            return ResponseEntity.ok(user.get());  // Retourne l'utilisateur directement (pas Optional<User>)
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Nom d'utilisateur ou mot de passe incorrect");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Nom d'utilisateur ou mot de passe incorrect"));
         }
     }
+    
     
 
     @PutMapping("/{id}")

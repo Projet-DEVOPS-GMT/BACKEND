@@ -11,13 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import java.util.ArrayList;
+
 @RestController
-@RequestMapping("/api/transports/")
+@RequestMapping("/api/transports")
 public class TransportController {
+
     private static final Logger logger = LoggerFactory.getLogger(TransportController.class);
 
     @Autowired
@@ -37,11 +39,8 @@ public class TransportController {
 
             List<Transport> transports = transportService.getNonFlightTransportsByCities(depart, destination, dateDepartParsed, dateRetourParsed);
 
+            String flightsJson = transportService.getFlightsFromAmadeus(depart, 200);
 
-            // 🚀 Appeler Amadeus pour récupérer les vols
-            String flightsJson = transportService.getFlightsFromAmadeus(depart, 200); // Ici 200€ max par vol, tu peux changer
-
-            // 🛠 Convertir la réponse JSON en liste d'objets Transport (pour uniformiser)
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(flightsJson);
             JsonNode dataNode = root.path("data");
@@ -49,13 +48,13 @@ public class TransportController {
             if (dataNode.isArray()) {
                 for (JsonNode flight : dataNode) {
                     Transport flightTransport = new Transport();
-                    flightTransport.setTypeTransport("Avion"); // Vol
+                    flightTransport.setTypeTransport("Avion");
                     flightTransport.setVilleDepart(depart);
                     flightTransport.setVilleDestination(flight.path("destination").asText());
                     flightTransport.setDateDepart(LocalDate.parse(flight.path("departureDate").asText()));
                     flightTransport.setDateRetour(LocalDate.parse(flight.path("returnDate").asText()));
                     flightTransport.setEstimationPrix(flight.path("price").path("total").asDouble());
-                    flightTransport.setTauxCO2(100.0); // ➡️ Valeur arbitraire de CO2 (à ajuster si besoin)
+                    flightTransport.setTauxCO2(100.0);
 
                     transports.add(flightTransport);
                 }
