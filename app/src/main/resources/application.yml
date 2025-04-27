@@ -16,3 +16,8 @@ spring:
 
 server:
   port: 8080
+  amadeus:
+  api:
+    key: w33Owm5XeYfUV7VmSGQ86rv20ezWgMCS  
+    secret: cIMWgwPw2zvGJ0Aw  
+    token-url: https://test.api.amadeus.com/v1/security/oauth2/token

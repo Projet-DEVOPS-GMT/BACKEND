@@ -80,14 +80,16 @@ dependencies {
   
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'mysql:mysql-connector-java:8.0.33'
- 
+    implementation 'com.amadeus:amadeus-java:1.0.0'
 	compileOnly 'org.projectlombok:lombok'
+
 
 	annotationProcessor 'org.projectlombok:lombok'
     implementation 'org.springframework.security:spring-security-crypto:6.4.1'
 
     implementation 'org.springframework.boot:spring-boot-starter-security' 
     testImplementation 'org.mockito:mockito-core'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
 //	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
    
 }

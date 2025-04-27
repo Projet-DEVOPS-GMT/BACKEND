@@ -4,7 +4,6 @@ import fr.parisnanterre.ProjetDEVOPSGMT.backend.Model.Transport;
 import fr.parisnanterre.ProjetDEVOPSGMT.backend.Repository.TransportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -13,10 +12,12 @@ import java.util.Optional;
 public class TransportServiceImpl implements TransportService {
 
     private final TransportRepository transportRepository;
-   
+    private final DestinationsService destinationsService;
+
     @Autowired
-    public TransportServiceImpl(TransportRepository transportRepository) {
+    public TransportServiceImpl(TransportRepository transportRepository, DestinationsService destinationsService) {
         this.transportRepository = transportRepository;
+        this.destinationsService = destinationsService;
     }
 
     @Override
@@ -24,68 +25,25 @@ public class TransportServiceImpl implements TransportService {
         return transportRepository.findAll();
     }
 
-    public List<Transport> getTransportsByCities(
-        String depart, 
-        String destination, 
-        LocalDate dateDepart, 
-        LocalDate dateRetour) {
-
-        return transportRepository.findByVilleDepartAndVilleDestinationAndDateDepartAndDateRetour(
-            depart, 
-            destination, 
-            dateDepart, 
-            dateRetour
-        );
-    }
-
     @Override
     public Optional<Transport> getTransportById(Long id) {
         return transportRepository.findById(id);
     }
-
 
     @Override
     public void deleteTransport(Long id) {
         transportRepository.deleteById(id);
     }
 
-
-    /*  donnee API externe 
-    private final String SNCF_API_KEY = "cba235f446bbe269cec5fec608ead671f1c4739be57df66f5cd4cc59";
-    private final String SNCF_API_URL = "https://api.sncf.com/v1/coverage/sncf/journeys";
-    
-    @Value("${sncf.api.key}")
-    private String SNCF_API_KEY;
-
-    public String getTransportData(String gareDepart, String gareArrivee) {
-        RestTemplate restTemplate = new RestTemplate();
-        String url = SNCF_API_URL + "?from=" + gareDepart + "&to=" + gareArrivee + "&apikey=" + SNCF_API_KEY + "&limit=50"; 
-        return restTemplate.getForObject(url, String.class);
+    @Override
+    public List<Transport> getNonFlightTransportsByCities(String depart, String destination, LocalDate dateDepart, LocalDate dateRetour) {
+        return transportRepository.findByVilleDepartAndVilleDestinationAndDateDepartAndDateRetourAndTypeTransportNot(
+            depart, destination, dateDepart, dateRetour, "Avion"
+        );
     }
-    public String getTransportData(String gareDepart, String gareArrivee) {
-        RestTemplate restTemplate = new RestTemplate();
-        String url = SNCF_API_URL + "?from=" + gareDepart + "&to=" + gareArrivee + "&apikey=" + SNCF_API_KEY;
-        return restTemplate.getForObject(url, String.class);
+
+    @Override
+    public String getFlightsFromAmadeus(String origin, double maxPrice) {
+        return destinationsService.getDestinations(origin, maxPrice);
     }
-      public void saveTransportData(String jsonResponse) {
-        try {
-            
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode root = objectMapper.readTree(jsonResponse);
-
-            JsonNode journeys = root.path("journeys");
-            for (JsonNode journey : journeys) {
-                Transport transport = new Transport();
-                transport.setTypeTransport("Train");
-                transport.setTauxCO2(journey.path("co2_emissions").asDouble());
-                transport.setEstimationPrix(journey.path("price").path("amount").asDouble());
-
-                transportRepository.save(transport);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Erreur lors de la sauvegarde des données de transport.");
-        }
-    } */
-    
 }
