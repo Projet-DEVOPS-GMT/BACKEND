@@ -2,12 +2,12 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/eco_nomade
     username: root
-    password: 
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update 
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -16,3 +16,14 @@ spring:
 
 server:
   port: 8080
+
+api:
+  opentripmap:
+    key: "remplacer par cle_api"
+    url: "https://api.opentripmap.com/0.1/en/places/radius"
+  booking:
+    rapidapi:
+      key: "ef2ac7215dmsh49122ba1cf64386p1375b2jsn85f9200137d7"
+      host: "booking-com.p.rapidapi.com"
+      hotels-url: "https://booking-com.p.rapidapi.com/v1/hotels/search"
+      locations-url: "https://booking-com.p.rapidapi.com/v1/hotels/locations"
