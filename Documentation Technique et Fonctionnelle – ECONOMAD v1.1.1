@@ -1,1 +1,113 @@
-Documentation finale 
+📄 Documentation Technique et Fonctionnelle – ECONOMAD v1.1.1
+Groupe GMT – Guemmat Manel, Moustafa Arafat, Timofte Alexandra Beatrice Version : v1.1.1 – Juin 2025
+Titre du Projet : ECONOMAD
+
+🔖 Objectif de la version
+La version v1.1.1 d’ECONOMAD introduit deux nouvelles intégrations d’API externes :
+Recherche de vols avec l’API Amadeus
+Système de gamification et classement écologique via une API dédiée
+
+Fonctionnalités principales de la v1.1.1 :
+
+Fonctionnalité F7 – Vols via Amadeus API
+Architecture :
+Frontend : formulaire (ville départ, ville arrivée, date), résultats affichés dynamiquement.
+Backend : appel à l’API /v1/shopping/flight-offers, gestion OAuth2, parsing JSON.
+Authentification : via client-id, client-secret, auth-url.
+amadeus:
+  client-id: ${AMADEUS_CLIENT_ID}
+  client-secret: ${AMADEUS_CLIENT_SECRET}
+  auth-url: https://test.api.amadeus.com/v1/security/oauth2/token
+  base-url: https://test.api.amadeus.com/v1
+Exemple de requête :
+GET /api/flights/search?origin=CDG&destination=LIS&departureDate=2025-05-15
+Exemple de réponse :
+{
+  "airline": "TAP Air Portugal",
+  "departure": "2025-05-15T08:10",
+  "arrival": "2025-05-15T10:45",
+  "price": 112.50
+}
+
+L’API renvoie une liste de vols disponibles.
+Le backend filtre, transforme la réponse et renvoie un JSON propre
+au frontend.
+L’utilisateur visualise les résultats avec les informations clefs
+(compagnie, prix, durée, escales)
+
+
+
+
+Fonctionnalité F8 – Classement Écologique et Attribution de Badges
+
+Objectif :
+Encourager les comportements écoresponsables à travers un classement dynamique des utilisateurs.
+Récompenser les utilisateurs avec des badges selon leur score écologique (FaireScore) et leurs actions enregistrées (gestes écologiques, défis, fréquence d’utilisation).
+Attribution automatique de badges selon les niveaux d’implication.
+Affichage des top utilisateurs dans un leaderboard dynamique.
+
+API Gamification Intégrée (GameBall)
+🔐 Authentification :
+OAuth2 avec client-id / secret via header HTTP
+🔄 Endpoints utilisés :
+🎖 Attribution de badges
+POST https://api.gameball.co/api/v4/integrations/event
+Headers: 
+  apiKey: <clé fournie>
+  Content-Type: application/json
+Payload:
+{
+  "playerUniqueId": "user123",
+  "events": {
+    "eco_action": {
+      "amount": 10
+    }
+  }
+}
+
+
+
+🏆 Récupération du leaderboard
+GET https://api.gameball.co/api/v4/integrations/leaderboard
+Headers:
+  apiKey: <clé fournie>
+
+📛 Récupération des badges utilisateur
+GET https://api.gameball.co/api/v4/players/{playerUniqueId}
+
+🧾 Données transmises :
+ID utilisateur
+FaireScore
+Nombre de gestes écoresponsables validés
+Date de dernière activité
+Exemples de badges proposés : 
+
+
+🛠 Stack Technique de la v1.1.1
+
+
+Tests fonctionnels
+Tests API : envoi manuel via Postman (leaderboard, badges).
+Vérification interface utilisateur : classement mis à jour dynamiquement.
+Tests unitaires backend sur les endpoints internes de classement.
+
+Flux Utilisateur – Gamification
+L’utilisateur navigue sur l’appli normalement.
+Chaque action écoresponsable est enregistrée (transport bas CO₂, défi relevé, score FairScore mis à jour).
+Ces données sont envoyées à l’API de gamification.
+Le backend :
+vérifie si des badges doivent être attribués,
+met à jour le profil de l’utilisateur,
+renvoie les infos au frontend.
+La page « Mon Profil » ou « Classement » affiche :
+le Top 10 des utilisateurs
+les badges et titres écoresponsables
+
+Conclusion, Commentaires et Analyse
+Au terme de cette itération du projet ECONOMAD v1.1.1, nous avons pu réaliser avec succès l’intégration de l’API Amadeus Flights, permettant à nos utilisateurs d’effectuer des recherches de vols personnalisées, avec un affichage dynamique des résultats et une gestion robuste des erreurs. Cette première fonctionnalité représente une avancée significative pour enrichir notre application avec des données réelles et une ouverture vers les services de mobilité aérienne.
+Cependant, nous tenons à signaler que la seconde fonctionnalité, portant sur l’intégration d’un module de gamification (classement, attribution de badges), n’a pas pu être finalisée ni intégrée à la branche principale de notre projet sur GitHub à ce stade. Bien que le travail d’analyse, de design fonctionnel, et de documentation ait été mené à bien, des contraintes techniques et de temps ont limité notre capacité à déployer cette fonctionnalité dans les délais impartis.
+Nous présentons nos excuses pour cette implémentation partielle, tout en soulignant que cette fonctionnalité représente pour nous un axe de développement particulièrement motivant. Le module de gamification nous a semblé riche en potentiel pédagogique, tant sur les plans UX que techniques, et nous souhaitons vivement pouvoir approfondir ce travail dans une future version, notamment à travers une API dédiée et des mécanismes de suivi des comportements écoresponsables plus avancés.
+Ce projet nous a permis de consolider nos compétences en intégration d’API REST, en sécurisation avec OAuth2, et en architecture fullstack (Spring Boot & Vue.js), tout en explorant des approches innovantes autour de l’écoresponsabilité numérique.
+Nous remercions nos encadrants et nos enseignants pour leur accompagnement, et restons enthousiastes à l’idée de faire évoluer ECONOMAD dans une prochaine release, plus complète et encore plus engagée pour des voyages durables.
+
+
